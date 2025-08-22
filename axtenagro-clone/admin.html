@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Axten Agro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Screen -->
+        <div id="login-screen" class="login-screen">
+            <div class="login-form">
+                <div class="logo">
+                    <img src="/placeholder.svg?height=60&width=60" alt="Axten Agro Logo">
+                    <h2>AXTEN AGRO</h2>
+                    <p>Admin Panel</p>
+                </div>
+                
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-password">Password</label>
+                        <input type="password" id="admin-password" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                
+                <div id="login-error" class="error-message" style="display: none;">
+                    Incorrect password. Please try again.
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+            <header class="admin-header">
+                <div class="admin-nav">
+                    <div class="logo">
+                        <img src="/placeholder.svg?height=40&width=40" alt="Axten Agro Logo">
+                        <h3>AXTEN AGRO - Admin</h3>
+                    </div>
+                    <div class="admin-actions">
+                        <button id="export-data" class="btn-secondary">Export Data</button>
+                        <button id="import-data" class="btn-secondary">Import Data</button>
+                        <button id="logout-btn" class="btn-danger">Logout</button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="admin-main">
+                <div class="admin-content">
+                    <div class="admin-section">
+                        <h2>Add New Product</h2>
+                        <form id="product-form" class="product-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="product-name">Product Name *</label>
+                                    <input type="text" id="product-name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-category">Category *</label>
+                                    <select id="product-category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Organic Jaggery">Organic Jaggery</option>
+                                        <option value="Makhana">Makhana</option>
+                                        <option value="Spices">Spices</option>
+                                        <option value="Grains">Grains</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-description">Description *</label>
+                                <textarea id="product-description" rows="4" required placeholder="Enter product description..."></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="product-price">Price (₹)</label>
+                                    <input type="number" id="product-price" step="0.01" placeholder="0.00">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-unit">Unit</label>
+                                    <select id="product-unit">
+                                        <option value="kg">Per KG</option>
+                                        <option value="quintal">Per Quintal</option>
+                                        <option value="ton">Per Ton</option>
+                                        <option value="piece">Per Piece</option>
+                                        <option value="packet">Per Packet</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-image">Product Image *</label>
+                                <input type="file" id="product-image" accept="image/*" required>
+                                <div id="image-preview" class="image-preview"></div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Add Product</button>
+                                <button type="button" id="cancel-edit" class="btn-secondary" style="display: none;">Cancel Edit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="admin-section">
+                        <h2>Manage Products</h2>
+                        <div class="products-stats">
+                            <div class="stat-card">
+                                <h3 id="total-products">0</h3>
+                                <p>Total Products</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="total-categories">0</h3>
+                                <p>Categories</p>
+                            </div>
+                        </div>
+                        
+                        <div class="products-table">
+                            <table id="admin-products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-products-list">
+                                    <!-- Products will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Hidden file input for import -->
+        <input type="file" id="import-file" accept=".json" style="display: none;">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
