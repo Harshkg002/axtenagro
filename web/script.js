@@ -9,8 +9,6 @@ const defaultProducts = [
     category: "Organic Jaggery",
     description:
       "Premium quality organic jaggery made from pure sugarcane juice. Rich in minerals and completely natural.",
-    price: 120,
-    unit: "kg",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
@@ -18,8 +16,6 @@ const defaultProducts = [
     name: "Sattu Powder",
     category: "Grains",
     description: "Nutritious sattu powder made from roasted gram. High in protein and perfect for healthy drinks.",
-    price: 80,
-    unit: "kg",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
@@ -27,8 +23,6 @@ const defaultProducts = [
     name: "Masala Sattu",
     category: "Spices",
     description: "Flavored sattu powder with aromatic spices. Ready to mix and drink for instant nutrition.",
-    price: 95,
-    unit: "kg",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
@@ -36,28 +30,26 @@ const defaultProducts = [
     name: "Fox Nuts (Makhana)",
     category: "Makhana",
     description: "Premium quality fox nuts, perfect for snacking. Rich in protein and low in calories.",
-    price: 450,
-    unit: "kg",
     image: "/placeholder.svg?height=200&width=300",
   },
 ]
 
 // Initialize products in localStorage if not exists
 function initializeProducts() {
-  if (!localStorage.getItem("axtenagro_products")) {
-    localStorage.setItem("axtenagro_products", JSON.stringify(defaultProducts))
+  if (!localStorage.getItem("N5 Overseas_Products")) {
+    localStorage.setItem("N5 Overseas", JSON.stringify(defaultProducts))
   }
 }
 
 // Get products from localStorage
 function getProducts() {
-  const products = localStorage.getItem("axtenagro_products")
+  const products = localStorage.getItem("N5 Overseas_Products")
   return products ? JSON.parse(products) : []
 }
 
 // Save products to localStorage
 function saveProducts(products) {
-  localStorage.setItem("axtenagro_products", JSON.stringify(products))
+  localStorage.setItem("N5 Overseas_Products", JSON.stringify(products))
 }
 
 // Generate unique ID for new products
@@ -278,8 +270,6 @@ document.getElementById("product-form")?.addEventListener("submit", (e) => {
         name,
         category,
         description,
-        price,
-        unit,
         image: e.target.result,
       }
 
