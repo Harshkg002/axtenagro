@@ -8,21 +8,21 @@ const defaultProducts = [
     name: "Organic Jaggery",
     category: "Organic Jaggery",
     description: "Premium quality organic jaggery made from pure sugarcane juice. Rich in minerals and completely natural.",
-    image: "web/images/unnamed-1.png",
+    image: "web/images/download-1.jpg",
   },
   {
     id: 2,
     name: "Sattu Powder",
     category: "Grains",
     description: "Nutritious sattu powder made from roasted gram. High in protein and perfect for healthy drinks.",
-    image: "web/images/shopping.webp",
+    image: "images/shopping.webp",
   },
   {
     id: 3,
     name: "Masala Sattu",
     category: "Spices",
     description: "Flavored sattu powder with aromatic spices. Ready to mix and drink for instant nutrition.",
-    image: "/Users/akshsaini/Desktop/axtenagro/web/images/unnamed-3.png",
+    image: "images/unnamed-3.png",
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const defaultProducts = [
     name: "Masala Makhana",
     category: "Makhana",
     description: "Crunchy fox nuts seasoned with Indian spices. A healthy and tasty snacking option.",
-    image: "web/images/download-1.jpg",
+    image: "images/download-1.jpg",
   },
 ]
 
@@ -92,7 +92,7 @@ function renderProducts() {
   const homeContainer = document.getElementById("home-products")
   if (homeContainer) {
     homeContainer.innerHTML = products
-      .slice(0, 4) // show only first 4 on homepage
+      .slice(0, 5) // show only first 4 on homepage
       .map(productToHTML)
       .join("")
   }
@@ -107,16 +107,20 @@ function renderProducts() {
 // Helper to generate product card HTML
 function productToHTML(p) {
   return `
-    <div class="product-card">
-      <img src="${p.image}" alt="${p.name}">
-      <div class="product-info">
-        <span class="product-category">${p.category}</span>
-        <h3>${p.name}</h3>
-        <p>${p.description}</p>
+    <a class="product-card-link" href="product-details.html?id=${p.id}">
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.name}">
+        <div class="product-info">
+          <span class="product-category">${p.category}</span>
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+        </div>
       </div>
-    </div>
-  `
+    </a>
+  `;
 }
+
+
 
 // Initialize and render when page loads
 window.addEventListener("DOMContentLoaded", () => {
