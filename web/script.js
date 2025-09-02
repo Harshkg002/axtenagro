@@ -8,7 +8,7 @@ const defaultProducts = [
     name: "Organic Jaggery",
     category: "Organic Jaggery",
     description: "Premium quality organic jaggery made from pure sugarcane juice. Rich in minerals and completely natural.",
-    image: "web/images/download-1.jpg",
+    image: "images/download-1.jpg",
   },
   {
     id: 2,
@@ -92,7 +92,7 @@ function renderProducts() {
   const homeContainer = document.getElementById("home-products")
   if (homeContainer) {
     homeContainer.innerHTML = products
-      .slice(0, 5) // show only first 4 on homepage
+      .slice(0, 3) // show only first 4 on homepage
       .map(productToHTML)
       .join("")
   }
