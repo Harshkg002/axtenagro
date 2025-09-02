@@ -114,6 +114,7 @@ body {
 }
 
 .browse-categories {
+  display : none;
   background: #4a7c59;
   color: white;
   border: none;

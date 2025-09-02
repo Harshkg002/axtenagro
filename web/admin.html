@@ -1,29 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Axten Agro</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>N5 overseas | Admin</title>
+        <link rel="stylesheet" href="style.css" />
+      
+        <!-- ✅ Fixed Content Security Policy -->
+       
+        <meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
+        style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+        img-src    'self' data: https:;
+        font-src   'self' https://fonts.gstatic.com;
+        connect-src 'self'
+                    https://firestore.googleapis.com
+                    https://www.googleapis.com
+                    https://identitytoolkit.googleapis.com
+                    https://securetoken.googleapis.com
+                    https://firebaseinstallations.googleapis.com;
+      ">
+
+
+
+      </head>
+      
 <body>
     <div class="admin-container">
         <!-- Login Screen -->
         <div id="login-screen" class="login-screen">
             <div class="login-form">
                 <div class="logo">
-                    <img src="images/logo.png" alt="N5 overseas Logo">
+                    <img src="logo.png" alt="N5 overseas Logo">
                     <h2>N5 overseas</h2>
                     <p>Admin Panel</p>
                 </div>
                 
+               <!-- In admin.html, replace the form inside #login-screen -->
                 <form id="admin-login-form">
                     <div class="form-group">
-                        <label for="admin-password">Password</label>
-                        <input type="password" id="admin-password" placeholder="Enter admin password" required>
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" placeholder="Enter admin email" required>
+                    </div>
+                    <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" placeholder="Enter admin password" required>
                     </div>
                     <button type="submit" class="btn-primary">Login</button>
                 </form>
+  
                 
                 <div id="login-error" class="error-message" style="display: none;">
                     Incorrect password. Please try again.
@@ -36,7 +63,7 @@
             <header class="admin-header">
                 <div class="admin-nav">
                     <div class="logo">
-                        <img src="images/logo.png" alt="N5 overseas Logo">
+                        <img src="logo.png" alt="N5 overseas Logo">
                         <h3>N5 overseas - Admin</h3>
                     </div>
                     <div class="admin-actions">
@@ -75,24 +102,7 @@
                                 <label for="product-description">Description *</label>
                                 <textarea id="product-description" rows="4" required placeholder="Enter product description..."></textarea>
                             </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="product-price">Price (₹)</label>
-                                    <input type="number" id="product-price" step="5000" placeholder="0.0">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="product-unit">Unit</label>
-                                    <select id="product-unit">
-                                        <option value="kg">Per KG</option>
-                                        <option value="quintal">Per Quintal</option>
-                                        <option value="ton">Per Ton</option>
-                                        <option value="piece">Per Piece</option>
-                                        <option value="packet">Per Packet</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             
                             <div class="form-group">
                                 <label for="product-image">Product Image *</label>
@@ -121,20 +131,18 @@
                         </div>
                         
                         <div class="products-table">
-                            <table id="admin-products-table">
+                            <table>
                                 <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                  <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Actions</th>
+                                  </tr>
                                 </thead>
-                                <tbody id="admin-products-list">
-                                    <!-- Products will be loaded here -->
-                                </tbody>
-                            </table>
+                                <tbody id="admin-products-list"></tbody>
+                              </table>
+                              
                         </div>
                     </div>
                 </div>
@@ -145,6 +153,6 @@
         <input type="file" id="import-file" accept=".json" style="display: none;">
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
