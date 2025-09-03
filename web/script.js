@@ -125,6 +125,64 @@ async function renderProducts() {
   }
 }
 
+// ---------------- SEARCH FUNCTION ----------------
+async function handleSearch(query, redirectIfNotProducts = false) {
+  const products = await getProducts();
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(query.toLowerCase()) ||
+    (p.description && p.description.toLowerCase().includes(query.toLowerCase())) ||
+    (p.category && p.category.toLowerCase().includes(query.toLowerCase()))
+  );
+
+  const homeContainer = document.getElementById("home-products");
+  const productsContainer = document.getElementById("products-container");
+
+  // ✅ If we're on home page but user wants to see full results → redirect to products.html
+  if (!productsContainer && homeContainer && redirectIfNotProducts) {
+    window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    return;
+  }
+
+  const container = productsContainer || homeContainer;
+  if (!container) return;
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p class='no-products'>No products found.</p>";
+  } else {
+    container.innerHTML = filtered.map(productToHTML).join("");
+  }
+}
+
+// ---------------- SEARCH EVENTS ----------------
+window.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.querySelector(".search-bar input");
+  const searchBtn = document.querySelector(".search-btn");
+
+  if (searchInput && searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      // Only redirect if we're on home page and want full results
+      handleSearch(searchInput.value, true);
+    });
+
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleSearch(searchInput.value, true);
+      }
+    });
+  }
+
+  // ✅ Auto apply search from URL on products.html
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("search");
+  if (searchQuery) {
+    const searchInput = document.querySelector(".search-bar input");
+    if (searchInput) searchInput.value = searchQuery;
+    handleSearch(searchQuery);
+  }
+});
+
+
+
 const OWNER_EMAIL = "akshsaini48@gmail.com";
 
 // ---------------- ADMIN LOGIN ----------------
@@ -173,9 +231,16 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 // ---------------- PRODUCT CARD HELPER ----------------
 function productToHTML(p) {
   const imgSrc = p.image && p.image.trim() !== "" ? p.image : PLACEHOLDER_IMAGE;
+
+  // 🔑 Limit description length (only on cards)
+  const shortDesc = p.description && p.description.length > 100 
+    ? p.description.substring(0, 100) + "..." 
+    : p.description;
+
   return `
     <a class="product-card-link" href="product-details.html?id=${p.id}">
       <div class="product-card">
@@ -183,12 +248,13 @@ function productToHTML(p) {
         <div class="product-info">
           <span class="product-category">${p.category}</span>
           <h3>${p.name}</h3>
-          <p>${p.description}</p>
+          <p>${shortDesc}</p>
         </div>
       </div>
     </a>
   `;
 }
+
 
 // ---------------- ADMIN PRODUCTS TABLE ----------------
 async function renderAdminProductsTable() {
@@ -322,5 +388,18 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // ---------------- URL SEARCH PARAM HANDLER ----------------
+document.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("search");
+
+  if (searchQuery) {
+    const searchInput = document.querySelector(".search-bar input");
+    if (searchInput) searchInput.value = searchQuery; // prefill search bar
+    await handleSearch(searchQuery.toLowerCase()); // auto-filter products
+  }
 });
 
+
+});

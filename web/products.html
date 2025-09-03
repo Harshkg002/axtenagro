@@ -1,125 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Products - N5-Overseas</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Products - N5 Overseas</title>
+  <link rel="stylesheet" href="style.css">
 
-    <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-  font-src   'self' https://fonts.gstatic.com;
-  img-src    'self' https: data: blob:;
-  connect-src 'self'
-    https://firestore.googleapis.com
-    https://www.googleapis.com
-    https://securetoken.googleapis.com
-    https://identitytoolkit.googleapis.com;
-  frame-ancestors 'self';
-  base-uri 'self';
-">
-<link rel="icon" type="image/png" href="images/favicon_white.png">
-<link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
-                   
+  <!-- Updated CSP -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
+    style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src   'self' https://fonts.gstatic.com;
+    img-src    'self' https: data: blob: https://firebasestorage.googleapis.com;
+    connect-src 'self'
+      https://firestore.googleapis.com
+      https://www.googleapis.com
+      https://securetoken.googleapis.com
+      https://identitytoolkit.googleapis.com
+      https://firebaseinstallations.googleapis.com
+      https://firebasestorage.googleapis.com;
+    frame-ancestors 'self';
+    base-uri 'self';
+  ">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon_white.png">
+  <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="top-bar">
-            <p>"N5 overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Organic Jaggery"</p>
+  <!-- Header -->
+  <header class="header">
+    <div class="top-bar">
+      <p>"N5 Overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Organic Jaggery"</p>
+    </div>
+    <div class="gst-bar">
+      <p>GST No. 27ABCCA7637DIZR | IEC code ABCCA7637D</p>
+    </div>
+    
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo.png" alt="N5 Overseas Logo">
+          <div class="logo-text">
+            <h2>N5 Overseas</h2>
+            <p>PRIVATE LIMITED</p>
+          </div>
         </div>
-        <div class="gst-bar">
-            <p>GST No. 27ABCCA7637DIZR | IEC code ABCCA7637D</p>
+
+        <!-- Search bar -->
+        <div class="search-bar">
+            <button class="search-btn">🔍</button>
+            <input type="text" id="search-input" placeholder="Search products..." />
+          </div>
+          
+      </div>
+      
+      <div class="nav-menu">
+        <button class="browse-categories">≡ BROWSE CATEGORIES</button>
+        <a href="index.html">HOME</a>
+        <a href="products.html" class="active">OUR PRODUCTS</a>
+        <a href="#certificate">CERTIFICATE</a>
+        <a href="#about">ABOUT US</a>
+        <a href="contact.html">BULK ENQUIRY</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="container">
+      <h1>Our Products</h1>
+      <p class="section-subtitle">Premium quality agricultural products from India</p>
+      
+      <div class="products-grid" id="products-container">
+        <!-- Products will be loaded here by JavaScript -->
+      </div>
+      
+      <div id="no-products" class="no-products" style="display: none;">
+        <p>No products found. Please try a different search.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <img src="images/logo.png" alt="N5 Overseas Logo">
+            <div class="logo-text">
+              <h3>N5 Overseas</h3>
+              <p>PRIVATE LIMITED</p>
+            </div>
+          </div>
+          <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
         </div>
         
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <img src="images/logo.png" alt="N5overseas Logo">
-                    <div class="logo-text">
-                        <h2>N5 overseas</h2>
-                        <p>PRIVATE LIMITED</p>
-                    </div>
-                </div>
-                
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for products" id="product-search">
-                    <!-- Category dropdown will be filled dynamically by JS -->
-                    <select id="category-filter">
-                        <option value="">ALL CATEGORIES</option>
-                    </select>
-                    <button class="search-btn" onclick="filterProducts()">🔍</button>
-                </div>
-            </div>
-            
-            <div class="nav-menu">
-                <button class="browse-categories">≡ BROWSE CATEGORIES</button>
-                <a href="index.html">HOME</a>
-                <a href="products.html" class="active">OUR PRODUCTS</a>
-                <a href="#certificate">CERTIFICATE</a>
-                <a href="#about">ABOUT US</a>
-                <a href="contact.html">BULK ENQUIRY</a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Products Section -->
-    <section class="products-section">
-        <div class="container">
-            <h1>Our Products</h1>
-            <p class="section-subtitle">Premium quality agricultural products from India</p>
-            
-            <div class="products-grid" id="products-container">
-                <!-- Products will be loaded here by JavaScript -->
-            </div>
-            
-            <div id="no-products" class="no-products" style="display: none;">
-                <p>No products found. Please try a different search or category.</p>
-            </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <img src="images/logo.png" alt="N5 overseas Logo">
-                        <div class="logo-text">
-                            <h3>N5 Overseas</h3>
-                            <p>PRIVATE LIMITED</p>
-                        </div>
-                    </div>
-                    <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#about">About Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contact Info</h4>
-                    <p>📍 Panipat, Haryana, India</p>
-                    <p>📞 +91 9215555995</p>
-                    <p>✉️ N5overseas@service.com</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 N5 overseas Pvt. Ltd. All rights reserved.</p>
-            </div>
+        
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>📍 Panipat, Haryana, India</p>
+          <p>📞 +91 9215555995</p>
+          <p>✉️ N5overseas@service.com</p>
         </div>
-    </footer>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 N5 Overseas Pvt. Ltd. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-    <script type="module" src="script.js"></script>
+  <!-- Scripts -->
+  <script type="module" src="script.js"></script>
+  <script>
+    // Search handling
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("search-input");
+      const searchBtn = document.getElementById("search-btn");
+
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query) {
+          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+        }
+      }
+
+      searchBtn.addEventListener("click", performSearch);
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") performSearch();
+      });
+    });
+  </script>
 </body>
 </html>

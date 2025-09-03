@@ -335,9 +335,12 @@ body {
 
 .product-card img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 220px;   /* fix the height */
+  object-fit: cover; /* crop and keep proportion */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
+
 
 .product-info {
   padding: 20px;
