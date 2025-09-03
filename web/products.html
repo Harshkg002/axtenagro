@@ -6,21 +6,22 @@
     <title>Our Products - N5-Overseas</title>
     <link rel="stylesheet" href="style.css">
 
-    <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-        style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-        img-src    'self' data: https:;
-        font-src   'self' https://fonts.gstatic.com;
-        connect-src 'self'
-                    https://firestore.googleapis.com
-                    https://www.googleapis.com
-                    https://identitytoolkit.googleapis.com
-                    https://securetoken.googleapis.com
-                    https://firebaseinstallations.googleapis.com;
-      ">
-
+    <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
+  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src   'self' https://fonts.gstatic.com;
+  img-src    'self' https: data: blob:;
+  connect-src 'self'
+    https://firestore.googleapis.com
+    https://www.googleapis.com
+    https://securetoken.googleapis.com
+    https://identitytoolkit.googleapis.com;
+  frame-ancestors 'self';
+  base-uri 'self';
+">
+<link rel="icon" type="image/png" href="images/favicon_white.png">
+<link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
                    
 </head>
 <body>
