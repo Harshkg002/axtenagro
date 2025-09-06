@@ -28,67 +28,36 @@
 
 </head>
 <body>
-  <header class="header">
-    <div class="top-bar"><p>N5 Overseas Pvt. Ltd – Premium Export Products</p></div>
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">
-          <img src="images/logo.png" alt="N5 overseas Logo"/>
-          <div class="logo-text">
-            <h2>N5 Overseas</h2><p>PRIVATE LIMITED</p>
-          </div>
-        </div>
-        <div class="nav-menu">
-          <a href="index.html">HOME</a>
-          <a href="products.html" class="active">OUR PRODUCTS</a>
-          <a href="contact.html">BULK ENQUIRY</a>
-        </div>
-      </div>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">N5 Overseas</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <section class="products-section">
-    <div class="container" id="product-details"></div>
-  </section>
+  <main>
+    <section id="product-details" class="product-details-section">
+      <p>Loading product...</p>
+    </section>
+  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <p>&copy; 2025 N5 Overseas Pvt. Ltd. All rights reserved.</p>
-      </div>
-    </div>
+  <footer>
+    <p>© 2024 N5 Overseas. All rights reserved.</p>
   </footer>
 
-  <script type="module" src="script.js"></script>
-
-  <script>
-    // Parse ?id= from URL
-    const params = new URLSearchParams(window.location.search);
-    const id = Number(params.get("id"));
-
-    // Load products from the same STORAGE_KEY your site uses
-    const products = getProducts(); // comes from script.js
-    const product = products.find(p => p.id === id);
-
-    const el = document.getElementById("product-details");
-    if (!product) {
-      el.innerHTML = "<div class='no-products'>Product not found.</div>";
-    } else {
-      el.innerHTML = `
-        <div class="product-card" style="max-width:900px;margin:auto;">
-          <img src="${product.image}" alt="${product.name}" style="height:420px;object-fit:cover;width:100%;">
-          <div class="product-info">
-            <span class="product-category">${product.category}</span>
-            <h2 style="margin:10px 0 6px 0;">${product.name}</h2>
-            <p>${product.description}</p>
-            <div style="margin-top:16px;">
-              <a class="btn-primary" href="contact.html">Enquire Now</a>
-              <a class="btn-secondary" href="products.html" style="margin-left:8px;">← Back to Products</a>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
