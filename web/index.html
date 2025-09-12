@@ -7,21 +7,23 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- Security Policy -->
-  <meta http-equiv="Content-Security-Policy"
-    content="
-      default-src 'self';
-      script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-      style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-      img-src    'self' data: https: blob: https://firebasestorage.googleapis.com;
-      font-src   'self' https://fonts.gstatic.com;
-      connect-src 'self'
-                  https://firestore.googleapis.com
-                  https://www.googleapis.com
-                  https://identitytoolkit.googleapis.com
-                  https://securetoken.googleapis.com
-                  https://firebaseinstallations.googleapis.com
-                  https://firebasestorage.googleapis.com;
-    ">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
+  font-src   'self' https://fonts.gstatic.com;
+  connect-src 'self'
+              https://lvpyferhoytfcemdlvix.supabase.co
+              https://firestore.googleapis.com
+              https://www.googleapis.com
+              https://identitytoolkit.googleapis.com
+              https://securetoken.googleapis.com
+              https://firebaseinstallations.googleapis.com;
+  frame-ancestors 'self';
+  base-uri 'self';
+">
+
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon_white.png">
@@ -204,25 +206,29 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script type="module" src="script.js"></script>
   <script>
-    // Search handling
-    document.addEventListener("DOMContentLoaded", () => {
-      const searchInput = document.getElementById("search-input");
-      const searchBtn = document.getElementById("search-btn");
-
-      function performSearch() {
-        const query = searchInput.value.trim().toLowerCase();
-        if (query) {
-          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
-        }
+    async function loadHomeProducts() {
+      const { data, error } = await supabaseClient
+        .from("uploads")
+        .select("firstname, image_url")
+        .limit(3)
+        .order("id", { ascending: false });
+  
+      const homeContainer = document.getElementById("home-products");
+      if (data && data.length > 0) {
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "product-card";
+          div.innerHTML = `
+            <img src="${item.image_url}" alt="${item.firstname}">
+            <h4>${item.firstname}</h4>
+          `;
+          homeContainer.appendChild(div);
+        });
       }
-
-      searchBtn.addEventListener("click", performSearch);
-      searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") performSearch();
-      });
-    });
+    }
+    loadHomeProducts();
   </script>
+  
 </body>
 </html>

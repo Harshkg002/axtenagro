@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Details - N5 Overseas</title>
   <link rel="stylesheet" href="style.css"/>
 
-  
-  <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-        style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-        img-src    'self' data: https:;
-        font-src   'self' https://fonts.gstatic.com;
-        connect-src 'self'
-                    https://firestore.googleapis.com
-                    https://www.googleapis.com
-                    https://identitytoolkit.googleapis.com
-                    https://securetoken.googleapis.com
-                    https://firebaseinstallations.googleapis.com;
-      ">
-
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
+  font-src   'self' https://fonts.gstatic.com;
+  connect-src 'self'
+              https://lvpyferhoytfcemdlvix.supabase.co
+              https://firestore.googleapis.com
+              https://www.googleapis.com
+              https://identitytoolkit.googleapis.com
+              https://securetoken.googleapis.com
+              https://firebaseinstallations.googleapis.com;
+  frame-ancestors 'self';
+  base-uri 'self';
+  ">
   <link rel="icon" type="image/png" href="images/favicon_white.png">
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
-
-</head>
-<body>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Supabase JS -->
+  <!-- ✅ Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -58,6 +47,46 @@
     <p>© 2024 N5 Overseas. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- ✅ Supabase Product Details Logic -->
+  <script>
+    const { createClient } = supabase;
+    const SUPABASE_URL = "https://lvpyferhoytfcemdlvix.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2cHlmZXJob3l0ZmNlbWRsdml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzMwOTQsImV4cCI6MjA3MjcwOTA5NH0.K-Vv9sbo3TG9CL7XPKQkQIUEx18kvGh7Vqju9oH7KEU"; // replace with your actual anon key
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+
+    async function loadProduct() {
+      const section = document.getElementById("product-details");
+
+      if (!productId) {
+        section.innerHTML = `<p style="color:red;">❌ No product ID provided.</p>`;
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("uploads")
+        .select("*")
+        .eq("id", productId)
+        .single();
+
+      if (error || !data) {
+        section.innerHTML = `<p style="color:red;">❌ Product not found.</p>`;
+        return;
+      }
+
+      section.innerHTML = `
+        <div class="product-details">
+          <img src="${data.image_url}" alt="${data.firstname}">
+          <h2>${data.firstname}</h2>
+          <p><strong>Category:</strong> ${data.category}</p>
+          <p>${data.description}</p>
+        </div>
+      `;
+    }
+
+    loadProduct();
+  </script>
 </body>
 </html>

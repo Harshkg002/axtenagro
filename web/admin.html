@@ -1,162 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>N5 overseas | Admin</title>
-        <link rel="stylesheet" href="style.css" />
-      
-        <!-- ✅ Fixed Content Security Policy -->
-       
-        <meta http-equiv="Content-Security-Policy"
-        content="
-            default-src 'self';
-            script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-            style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-            img-src    'self' data: https:;
-            font-src   'self' https://fonts.gstatic.com;
-            connect-src 'self'
-                        https://lvpyferhoytfcemdlvix.supabase.co
-                        https://firestore.googleapis.com
-                        https://www.googleapis.com
-                        https://identitytoolkit.googleapis.com
-                        https://securetoken.googleapis.com
-                        https://firebaseinstallations.googleapis.com;
-        ">
-
-
-
-      <link rel="icon" type="image/png" href="images/favicon_white.png">
-      <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
-
-      </head>
-      
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Upload - Supabase</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- ✅ Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 <body>
-    <div class="admin-container">
-        <!-- Login Screen -->
-        <div id="login-screen" class="login-screen">
-            <div class="login-form">
-                <div class="logo">
-                    <img src="logo.png" alt="N5 overseas Logo">
-                    <h2>N5 overseas</h2>
-                    <p>Admin Panel</p>
-                </div>
-                
-               <!-- In admin.html, replace the form inside #login-screen -->
-                <form id="admin-login-form">
-                    <div class="form-group">
-                    <label for="admin-email">Email</label>
-                    <input type="email" id="admin-email" placeholder="Enter admin email" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="admin-password">Password</label>
-                    <input type="password" id="admin-password" placeholder="Enter admin password" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Login</button>
-                </form>
-  
-                
-                <div id="login-error" class="error-message" style="display: none;">
-                    Incorrect password. Please try again.
-                </div>
-            </div>
-        </div>
+  <h2>Admin Login</h2>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required /><br/><br/>
+    <input type="password" id="password" placeholder="Password" required /><br/><br/>
+    <button type="submit">Login</button>
+  </form>
+  <p id="loginStatus"></p>
 
-        <!-- Admin Dashboard -->
-        <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
-            <header class="admin-header">
-                <div class="admin-nav">
-                    <div class="logo">
-                        <img src="logo.png" alt="N5 overseas Logo">
-                        <h3>N5 overseas - Admin</h3>
-                    </div>
-                    <div class="admin-actions">
-                        <button id="export-data" class="btn-secondary">Export Data</button>
-                        <button id="import-data" class="btn-secondary">Import Data</button>
-                        <button id="logout-btn" class="btn-danger">Logout</button>
-                    </div>
-                </div>
-            </header>
+  <hr/>
 
-            <main class="admin-main">
-                <div class="admin-content">
-                    <div class="admin-section">
-                        <h2>Add New Product</h2>
-                        <form id="product-form" class="product-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="product-name">Product Name *</label>
-                                    <input type="text" id="product-name" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="product-category">Category *</label>
-                                    <select id="product-category" required>
-                                        <option value="">Select Category</option>
-                                        <option value="Organic Jaggery">Organic Jaggery</option>
-                                        <option value="Makhana">Makhana</option>
-                                        <option value="Spices">Spices</option>
-                                        <option value="Grains">Grains</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="product-description">Description *</label>
-                                <textarea id="product-description" rows="4" required placeholder="Enter product description..."></textarea>
-                            </div>
+  <h2>Upload Product</h2>
+  <form id="uploadForm" style="display:none;">
+    <input type="text" id="firstname" placeholder="Enter product name" required /><br/><br/>
+    <input type="text" id="category" placeholder="Enter category" required /><br/><br/>
+    <input type="text" id="description" placeholder="Enter description" required /><br/><br/>
+    <input type="file" id="photo" accept="image/*" required /><br/><br/>
+    <button type="submit">Upload</button>
+  </form>
+  <p id="status"></p>
 
-                            
-                            <div class="form-group">
-                                <label for="product-image">Product Image *</label>
-                                <input type="file" id="product-image" accept="image/*" required>
-                                <div id="image-preview" class="image-preview"></div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button type="submit" class="btn-primary">Add Product</button>
-                                <button type="button" id="cancel-edit" class="btn-secondary" style="display: none;">Cancel Edit</button>
-                            </div>
-                        </form>
-                    </div>
+  <script>
+    const { createClient } = supabase;
 
-                    <div class="admin-section">
-                        <h2>Manage Products</h2>
-                        <div class="products-stats">
-                            <div class="stat-card">
-                                <h3 id="total-products">0</h3>
-                                <p>Total Products</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3 id="total-categories">0</h3>
-                                <p>Categories</p>
-                            </div>
-                        </div>
-                        
-                        <div class="products-table">
-                            <table>
-                                <thead>
-                                  <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Actions</th>
-                                  </tr>
-                                </thead>
-                                <tbody id="admin-products-list"></tbody>
-                              </table>
-                              
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+    const SUPABASE_URL = "https://lvpyferhoytfcemdlvix.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2cHlmZXJob3l0ZmNlbWRsdml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzMwOTQsImV4cCI6MjA3MjcwOTA5NH0.K-Vv9sbo3TG9CL7XPKQkQIUEx18kvGh7Vqju9oH7KEU"; // replace with your real key
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        <!-- Hidden file input for import -->
-        <input type="file" id="import-file" accept=".json" style="display: none;">
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="module" src="script.js"></script>
+    const ADMIN_EMAIL = "akshsaini48@gmail.com"; // ✅ set your admin email here
+
+    const loginForm = document.getElementById("loginForm");
+    const loginStatus = document.getElementById("loginStatus");
+    const uploadForm = document.getElementById("uploadForm");
+    const statusEl = document.getElementById("status");
+
+    // ✅ Handle login
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        loginStatus.textContent = "❌ Login failed: " + error.message;
+      } else {
+        if (data.user.email === ADMIN_EMAIL) {
+          loginStatus.textContent = "✅ Logged in as Admin";
+          uploadForm.style.display = "block"; 
+          loginForm.style.display = "none";   
+        } else {
+          loginStatus.textContent = "⚠️ You are not authorized as Admin.";
+        }
+      }
+    });
+
+    // ✅ Handle upload
+    uploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const firstname = document.getElementById("firstname").value.trim();
+      const category = document.getElementById("category").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const file = document.getElementById("photo").files[0];
+
+      if (!firstname || !category || !description || !file) {
+        statusEl.textContent = "⚠️ Please fill all fields.";
+        return;
+      }
+
+      try {
+        const userResp = await supabaseClient.auth.getUser();
+        const user = userResp.data.user;
+        if (!user || user.email !== ADMIN_EMAIL) throw new Error("Not authorized");
+
+        const fileName = `${Date.now()}-${file.name}`;
+        const { error: storageError } = await supabaseClient
+          .storage.from("photos")
+          .upload(fileName, file);
+
+        if (storageError) throw storageError;
+
+        const { data: publicURL } = supabaseClient
+          .storage.from("photos")
+          .getPublicUrl(fileName);
+
+        const { error: insertError } = await supabaseClient
+          .from("uploads")
+          .insert([{
+            firstname,
+            category,
+            description,
+            image_url: publicURL.publicUrl,
+            user_id: user.id
+          }]);
+
+        if (insertError) throw insertError;
+
+        statusEl.textContent = "✅ Upload successful!";
+        uploadForm.reset();
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "❌ Upload failed: " + err.message;
+      }
+    });
+  </script>
 </body>
 </html>

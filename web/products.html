@@ -8,25 +8,26 @@
 
   <!-- Updated CSP -->
   <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-    style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src   'self' https://fonts.gstatic.com;
-    img-src    'self' https: data: blob: https://firebasestorage.googleapis.com;
-    connect-src 'self'
-      https://firestore.googleapis.com
-      https://www.googleapis.com
-      https://securetoken.googleapis.com
-      https://identitytoolkit.googleapis.com
-      https://firebaseinstallations.googleapis.com
-      https://firebasestorage.googleapis.com;
-    frame-ancestors 'self';
-    base-uri 'self';
+  default-src 'self';
+  script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
+  font-src   'self' https://fonts.gstatic.com;
+  connect-src 'self'
+              https://lvpyferhoytfcemdlvix.supabase.co
+              https://firestore.googleapis.com
+              https://www.googleapis.com
+              https://identitytoolkit.googleapis.com
+              https://securetoken.googleapis.com
+              https://firebaseinstallations.googleapis.com;
+  frame-ancestors 'self';
+  base-uri 'self';
   ">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon_white.png">
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <!-- Header -->
@@ -50,10 +51,9 @@
 
         <!-- Search bar -->
         <div class="search-bar">
-            <button class="search-btn">🔍</button>
-            <input type="text" id="search-input" placeholder="Search products..." />
-          </div>
-          
+          <button class="search-btn">🔍</button>
+          <input type="text" id="search-input" placeholder="Search products..." />
+        </div>
       </div>
       
       <div class="nav-menu">
@@ -122,21 +122,73 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script type="module" src="script.js"></script>
+  <!-- ✅ Supabase Products Logic -->
   <script>
-    // Search handling
+    const { createClient } = supabase;
+    const SUPABASE_URL = "https://lvpyferhoytfcemdlvix.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2cHlmZXJob3l0ZmNlbWRsdml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzMwOTQsImV4cCI6MjA3MjcwOTA5NH0.K-Vv9sbo3TG9CL7XPKQkQIUEx18kvGh7Vqju9oH7KEU"; // replace with your actual anon key
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const container = document.getElementById("products-container");
+    const noProducts = document.getElementById("no-products");
+
+    async function fetchProducts() {
+      const { data, error } = await supabaseClient
+        .from("uploads")
+        .select("id, firstname, category, description, image_url")
+        .order("id", { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<p style="color:red;">❌ ${error.message}</p>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      if (!data || data.length === 0) {
+        noProducts.style.display = "block";
+        return;
+      }
+
+      data.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <a href="product-details.html?id=${item.id}">
+            <img src="${item.image_url}" alt="${item.firstname}">
+            <h3>${item.firstname}</h3>
+            <p><em>${item.category}</em></p>
+            <p>${item.description}</p>
+          </a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    fetchProducts();
+  </script>
+
+  <!-- Search handling -->
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const searchInput = document.getElementById("search-input");
-      const searchBtn = document.getElementById("search-btn");
+      const searchBtn = document.querySelector(".search-btn");
 
       function performSearch() {
         const query = searchInput.value.trim().toLowerCase();
-        if (query) {
-          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
-        }
+        const cards = document.querySelectorAll(".product-card");
+        let found = false;
+
+        cards.forEach(card => {
+          const text = card.innerText.toLowerCase();
+          if (text.includes(query)) {
+            card.style.display = "block";
+            found = true;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        document.getElementById("no-products").style.display = found ? "none" : "block";
       }
 
       searchBtn.addEventListener("click", performSearch);
