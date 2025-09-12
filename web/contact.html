@@ -1,194 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - N5 Overseas</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - N5 Overseas</title>
+  <link rel="stylesheet" href="style.css" />
 
-    <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-        style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-        img-src    'self' data: https:;
-        font-src   'self' https://fonts.gstatic.com;
-        connect-src 'self'
-                    https://firestore.googleapis.com
-                    https://www.googleapis.com
-                    https://identitytoolkit.googleapis.com
-                    https://securetoken.googleapis.com
-                    https://firebaseinstallations.googleapis.com;
-      ">
+  <meta http-equiv="Content-Security-Policy"
+    content="
+      default-src 'self';
+      script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
+      style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+      img-src    'self' data: https:;
+      font-src   'self' https://fonts.gstatic.com;
+      connect-src 'self'
+                  https://firestore.googleapis.com
+                  https://www.googleapis.com
+                  https://identitytoolkit.googleapis.com
+                  https://securetoken.googleapis.com
+                  https://firebaseinstallations.googleapis.com;
+    "/>
 
-      <link rel="icon" type="image/png" href="images/favicon_white.png">
-      <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
-                   
+  <link rel="icon" type="image/png" href="images/favicon_white.png" />
+  <link rel="icon" type="image/x-icon" href="images/favicon_white.ico" />
 </head>
 <body>
-    <!-- Header (same as index.html) -->
-    <header class="header">
-        <div class="top-bar">
-            <p>"N5 Overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Organic Jaggery"</p>
-        </div>
-        <div class="gst-bar">
-            <p>GST No. 06EAIPS2080E2ZO | IEC code EAIPS2080E</p>
-        </div>
-        
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <img src="images/logo.png" alt="N5 overseas Logo">
-                    <div class="logo-text">
-                        <h2>N5 Overseas</h2>
-                        <p>PRIVATE LIMITED</p>
-                    </div>
-                </div>
-                
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for products">
-                    <select>
-                        <option>SELECT CATEGORY</option>
-                        <option>Organic Jaggery</option>
-                        <option>Makhana</option>
-                        <option>Spices</option>
-                    </select>
-                    <button class="search-btn">🔍</button>
-                </div>
-            </div>
-            
-            <div class="nav-menu">
-                <button class="browse-categories">≡ BROWSE CATEGORIES</button>
-                <a href="index.html">HOME</a>
-                <a href="products.html">OUR PRODUCTS</a>
-                <a href="#certificate">CERTIFICATE</a>
-                <a href="#about">ABOUT US</a>
-                <a href="contact.html" class="active">BULK ENQUIRY</a>
-            </div>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header class="header">
+    <div class="top-bar">
+      <p>"N5 Overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Organic Jaggery"</p>
+    </div>
+    <div class="gst-bar">
+      <p>GST No. 06EAIPS2080E2ZO | IEC code EAIPS2080E</p>
+    </div>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p class="section-subtitle">Get in touch with us for bulk orders and inquiries</p>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2>Get In Touch</h2>
-                    <div class="contact-item">
-                        <h3>📍 Address</h3>
-                        <p>N5 overseas Pvt. Ltd.<br>
-                        Panipat, Haryana, India<br>
-                        PIN: 132001</p>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <h3>📞 Phone</h3>
-                        <p>+91 9215555995<br>
-                        +91 9577400072</p>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <h3>✉️ Email</h3>
-                        <p>N5overseas@servicewith.com<br>
-                        sales@N5overseas.com</p>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <h3>🕒 Business Hours</h3>
-                        <p>Monday - Saturday: 9:00 AM - 6:00 PM<br>
-                        Sunday: Closed</p>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <h2>Send us a Message</h2>
-                    <form action="https://formspree.io/f/xgvldzzv" method="POST">
-                        <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select Subject</option>
-                                <option value="bulk-order">Bulk Order Inquiry</option>
-                                <option value="product-info">Product Information</option>
-                                <option value="export-inquiry">Export Inquiry</option>
-                                <option value="partnership">Partnership Opportunity</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Please provide details about your inquiry..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo.png" alt="N5 overseas Logo" />
+          <div class="logo-text">
+            <h2>N5 Overseas</h2>
+            <p>PRIVATE LIMITED</p>
+          </div>
         </div>
-    </section>
 
-    <!-- Footer (same as index.html) -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <img src="images/logo.png" alt="N5 overseas Logo">
-                        <div class="logo-text">
-                            <h3>N5 overseas</h3>
-                            <p>PRIVATE LIMITED</p>
-                        </div>
-                    </div>
-                    <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#about">About Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contact Info</h4>
-                    <p>📍 Panipat, Harayana, India</p>
-                    <p>📞 +91 9215555995</p>
-                    <p>✉️ info@N5overseas.com</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 N5 overseas Pvt. Ltd. All rights reserved.</p>
-            </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search for products" />
+          <select>
+            <option>SELECT CATEGORY</option>
+            <option>Organic Jaggery</option>
+            <option>Makhana</option>
+            <option>Spices</option>
+          </select>
+          <button class="search-btn">🔍</button>
         </div>
-    </footer>
+      </div>
 
-    <script type="module" src="script.js"></script>
+      <div class="nav-menu">
+        <a href="index.html">HOME</a>
+        <a href="products.html">OUR PRODUCTS</a>
+        <a href="#certificate">CERTIFICATE</a>
+        <a href="#about">ABOUT US</a>
+        <a href="contact.html" class="active">BULK ENQUIRY</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p class="section-subtitle">Get in touch with us for bulk orders and inquiries</p>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <h2>Get In Touch</h2>
+          <div class="contact-item">
+            <h3>📍 Address</h3>
+            <p>N5 overseas Pvt. Ltd.<br/>Panipat, Haryana, India<br/>PIN: 132001</p>
+          </div>
+
+          <div class="contact-item">
+            <h3>📞 Phone</h3>
+            <p>+91 9215555995<br/>+91 9577400072</p>
+          </div>
+
+          <div class="contact-item">
+            <h3>✉️ Email</h3>
+            <p>sales@N5overseas.com</p>
+          </div>
+
+          <div class="contact-item">
+            <h3>🕒 Business Hours</h3>
+            <p>Monday - Saturday: 9:00 AM - 6:00 PM<br/>Sunday: Closed</p>
+          </div>
+        </div>
+
+        <!-- Contact Form wrapped inside .contact-form -->
+        <div class="contact-form">
+          <h2>Send us a Message</h2>
+          <div class="form-wrapper">
+            <form action="https://formspree.io/f/xgvldzzv" method="POST">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" />
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" name="company" />
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Subject *</label>
+                <select id="subject" name="subject" required>
+                  <option value="">Select Subject</option>
+                  <option value="bulk-order">Bulk Order Inquiry</option>
+                  <option value="product-info">Product Information</option>
+                  <option value="export-inquiry">Export Inquiry</option>
+                  <option value="partnership">Partnership Opportunity</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Please provide details about your inquiry..."></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+        <!-- End contact-form -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <img src="images/logo.png" alt="N5 overseas Logo" />
+            <div class="logo-text">
+              <h3>N5 overseas</h3>
+              <p>PRIVATE LIMITED</p>
+            </div>
+          </div>
+          <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>📍 Panipat, Harayana, India</p>
+          <p>📞 +91 9215555995</p>
+          <p>✉️ sales@N5overseas.com</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 N5 overseas All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@
     default-src 'self';
     script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
     style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-    img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
+    img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co https://firebasestorage.googleapis.com;
     font-src   'self' https://fonts.gstatic.com;
     connect-src 'self'
                 https://lvpyferhoytfcemdlvix.supabase.co
@@ -29,6 +29,8 @@
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
 
   <style>
+    body { background: #fff; margin: 0; font-family: Arial, sans-serif; }
+
     /* Minimal slider styling */
     .hero-slider { position: relative; max-width: 100%; overflow: hidden; }
     .slider-container { position: relative; }
@@ -39,6 +41,7 @@
     .dot { height: 12px; width: 12px; margin: 0 4px; background: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; }
     .dot.active { background: #333; }
 
+    .products-preview { background: #fff; padding: 40px 0; }
     .products-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
     .product-card { width: 220px; padding: 15px; background: #fff; border: 1px solid #ddd; text-align: center; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
     .product-card img { max-width: 100%; height: auto; }
@@ -48,7 +51,7 @@
   <!-- Header -->
   <header class="header">
     <div class="top-bar">
-      <p>"N5-Overseas is a Leading Indian Exporter & Supplier of Makhana & Onion Garlic Powder"</p>
+      <p>"N5-Overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Onion Garlic Powder"</p>
     </div>
     <div class="gst-bar">
       <p>GST No. 27ABCCA7637DIZR | IEC code ABCCA7637D</p>
@@ -72,7 +75,6 @@
       </div>
 
       <div class="nav-menu">
-        <button class="browse-categories">≡ BROWSE CATEGORIES</button>
         <a href="index.html" class="active">HOME</a>
         <a href="products.html">OUR PRODUCTS</a>
         <a href="#certificate">CERTIFICATE</a>
@@ -108,9 +110,9 @@
       </div>
     </div>
     <div class="slider-dots">
-      <span class="dot active" data-slide="1"></span>
-      <span class="dot" data-slide="2"></span>
-      <span class="dot" data-slide="3"></span>
+      <span class="dot active" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
     </div>
   </section>
 
@@ -152,16 +154,12 @@
   <section class="about" id="about">
     <div class="container">
       <h2>Welcome to N5 overseas Pvt. Ltd.</h2>
-      <p>N5 overseas Pvt. Ltd. is one of India's leading exporters of fresh fruits and vegetables. We specialize in the export of Table Grapes, Pomegranates, Onions, Mangoes, Fresh Vegetables, and Non-GMO Certified Maize.
-
-        To ensure the highest standards of quality, we have partnered with Bayer Crop Science and Jay Agro Export. This strategic collaboration enables us to cultivate premium-grade table grapes and vegetables that meet Global GAP standards and adhere to Good Agricultural Practices (GAP).
-        </p>
-      <h2>Strategic Location Advantage</h2>
-      <p>Headquartered in Panipat, India — the hub of fresh produce — we operate from a region that contributes to over 80% of India's grape, onion, and vegetable exports. Panipat boasts the country's highest cultivation and production of these commodities, ensuring a consistent and quality supply chain.
-
-        Additionally airport located just two hours away, we enjoy seamless connectivity for efficient global logistics and faster deliveries.
-        
-        Choose N5 Overseas for quality you can trust — from the farm to your doorstep.</p>
+      <p>N5 overseas Pvt. Ltd. is one of India's leading exporters of fresh fruits and vegetables. We specialize in the export of Table Grapes, Pomegranates, Onions, Mangoes, Fresh Vegetables, and Non-GMO Certified Maize.</p>
+      <p>To ensure the highest standards of quality, we have partnered with Bayer Crop Science and Jay Agro Export. This strategic collaboration enables us to cultivate premium-grade table grapes and vegetables that meet Global GAP standards and adhere to Good Agricultural Practices (GAP).</p>
+      <h3>Strategic Location Advantage</h3>
+      <p>Headquartered in Panipat, India — the hub of fresh produce — we operate from a region that contributes to over 80% of India's grape, onion, and vegetable exports. Panipat boasts the country's highest cultivation and production of these commodities, ensuring a consistent and quality supply chain.</p>
+      <p>Additionally airport located just two hours away, we enjoy seamless connectivity for efficient global logistics and faster deliveries.</p>
+      <p>Choose N5 Overseas for quality you can trust — from the farm to your doorstep.</p>
     </div>
   </section>
 
@@ -181,7 +179,36 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 N5-Overseas All rights reserved.</p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <img src="images/logo.png" alt="N5 overseas Logo">
+            <div class="logo-text">
+              <h3>N5 - OVERSEAS</h3>
+              <p>PRIVATE LIMITED</p>
+            </div>
+          </div>
+          <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>📍 Panipat, Harayana, India</p>
+          <p>📞 +91 9215555995</p>
+          <p>✉️ servivewithN5overseas.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 N5-Overseas Pvt. Ltd. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
@@ -194,6 +221,25 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("search-input");
+      const searchBtn = document.getElementById("search-btn");
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+      }
+      searchBtn.addEventListener("click", performSearch);
+      searchInput.addEventListener("keypress", (e) => { if (e.key === "Enter") performSearch(); });
+    });
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" crossorigin="anonymous"></script>
+  <script>
+    'undefined'===typeof _trfq||(window._trfq=[]);
+    'undefined'===typeof _trfd&&(window._trfd=[]);
+    _trfd.push({'tccl.baseHost':'secureserver.net'});
+  </script>
+  <script src="https://img1.wsimg.com/traffic-assets/js/tccl.min.js"></script>
 </body>
 </html>

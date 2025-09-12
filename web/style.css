@@ -115,17 +115,6 @@ body {
   justify-content: center;
 }
 
-.browse-categories {
-  display : none;
-  background: #4a7c59;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
 .nav-menu a {
   text-decoration: none;
   color: #333;
@@ -937,4 +926,28 @@ body {
 
 .search-btn:hover {
   background: #e68a00;
+}
+
+.body {
+  background-color: #ffffff; /* pure white */
+  color: #333; /* optional: makes text readable */
+}
+
+.products-preview {
+  background-color: #ffffff;
+  padding: 40px 0;   /* keeps spacing */
+}
+
+/* Contact section background (if you want to keep page white) */
+.contact-section {
+  background-color: #ffffff;   /* or #f8f8f8 if you prefer very light gray */
+  padding: 60px 0;
+}
+
+/* Style for the form box */
+.contact-form {
+  background-color: #fafafa;   /* pale white/light gray */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
