@@ -912,3 +912,28 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+.search-bar input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  border-color: #ff9800;
+  box-shadow: 0 0 4px rgba(255,152,0,0.6);
+}
+
+.search-btn {
+  padding: 8px 14px;
+  margin-left: 5px;
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background: #e68a00;
+}

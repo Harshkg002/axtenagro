@@ -8,26 +8,41 @@
 
   <!-- Security Policy -->
   <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-  style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
-  font-src   'self' https://fonts.gstatic.com;
-  connect-src 'self'
-              https://lvpyferhoytfcemdlvix.supabase.co
-              https://firestore.googleapis.com
-              https://www.googleapis.com
-              https://identitytoolkit.googleapis.com
-              https://securetoken.googleapis.com
-              https://firebaseinstallations.googleapis.com;
-  frame-ancestors 'self';
-  base-uri 'self';
-">
-
+    default-src 'self';
+    script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+    style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+    img-src    'self' data: https: blob: https://lvpyferhoytfcemdlvix.supabase.co;
+    font-src   'self' https://fonts.gstatic.com;
+    connect-src 'self'
+                https://lvpyferhoytfcemdlvix.supabase.co
+                https://firestore.googleapis.com
+                https://www.googleapis.com
+                https://identitytoolkit.googleapis.com
+                https://securetoken.googleapis.com
+                https://firebaseinstallations.googleapis.com;
+    frame-ancestors 'self';
+    base-uri 'self';
+  ">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon_white.png">
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
+
+  <style>
+    /* Minimal slider styling */
+    .hero-slider { position: relative; max-width: 100%; overflow: hidden; }
+    .slider-container { position: relative; }
+    .slide { display: none; text-align: center; }
+    .slide img { width: 100%; height: auto; }
+    .slide.active { display: block; }
+    .slider-dots { text-align: center; margin-top: 10px; }
+    .dot { height: 12px; width: 12px; margin: 0 4px; background: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; }
+    .dot.active { background: #333; }
+
+    .products-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .product-card { width: 220px; padding: 15px; background: #fff; border: 1px solid #ddd; text-align: center; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .product-card img { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -49,7 +64,7 @@
           </div>
         </div>
 
-        <!-- Updated Search Bar -->
+        <!-- Search Bar -->
         <div class="search-bar">
           <input type="text" id="search-input" placeholder="Search for products...">
           <button id="search-btn" class="search-btn">🔍</button>
@@ -93,9 +108,9 @@
       </div>
     </div>
     <div class="slider-dots">
-      <span class="dot active" onclick="currentSlide(1)"></span>
-      <span class="dot" onclick="currentSlide(2)"></span>
-      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot active" data-slide="1"></span>
+      <span class="dot" data-slide="2"></span>
+      <span class="dot" data-slide="3"></span>
     </div>
   </section>
 
@@ -137,12 +152,16 @@
   <section class="about" id="about">
     <div class="container">
       <h2>Welcome to N5 overseas Pvt. Ltd.</h2>
-      <p>N5 overseas Pvt. Ltd. is one of India's leading exporters of fresh fruits and vegetables. We specialize in the export of Table Grapes, Pomegranates, Onions, Mangoes, Fresh Vegetables, and Non-GMO Certified Maize.</p>
-      <p>To ensure the highest standards of quality, we have partnered with Bayer Crop Science and Jay Agro Export. This strategic collaboration enables us to cultivate premium-grade table grapes and vegetables that meet Global GAP standards and adhere to Good Agricultural Practices (GAP).</p>
-      <h3>Strategic Location Advantage</h3>
-      <p>Headquartered in Panipat, India — the hub of fresh produce — we operate from a region that contributes to over 80% of India's grape, onion, and vegetable exports. Panipat boasts the country's highest cultivation and production of these commodities, ensuring a consistent and quality supply chain.</p>
-      <p>Additionally airport located just two hours away, we enjoy seamless connectivity for efficient global logistics and faster deliveries.</p>
-      <p>Choose N5 Overseas for quality you can trust — from the farm to your doorstep.</p>
+      <p>N5 overseas Pvt. Ltd. is one of India's leading exporters of fresh fruits and vegetables. We specialize in the export of Table Grapes, Pomegranates, Onions, Mangoes, Fresh Vegetables, and Non-GMO Certified Maize.
+
+        To ensure the highest standards of quality, we have partnered with Bayer Crop Science and Jay Agro Export. This strategic collaboration enables us to cultivate premium-grade table grapes and vegetables that meet Global GAP standards and adhere to Good Agricultural Practices (GAP).
+        </p>
+      <h2>Strategic Location Advantage</h2>
+      <p>Headquartered in Panipat, India — the hub of fresh produce — we operate from a region that contributes to over 80% of India's grape, onion, and vegetable exports. Panipat boasts the country's highest cultivation and production of these commodities, ensuring a consistent and quality supply chain.
+
+        Additionally airport located just two hours away, we enjoy seamless connectivity for efficient global logistics and faster deliveries.
+        
+        Choose N5 Overseas for quality you can trust — from the farm to your doorstep.</p>
     </div>
   </section>
 
@@ -151,7 +170,7 @@
     <div class="container">
       <h2>Our Products</h2>
       <div class="products-grid" id="home-products">
-        <!-- Products will be loaded here by JavaScript -->
+        <p>Loading products…</p>
       </div>
       <div class="text-center">
         <a href="products.html" class="btn-primary">View All Products</a>
@@ -162,39 +181,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <div class="logo">
-            <img src="images/logo.png" alt="N5 overseas Logo">
-            <div class="logo-text">
-              <h3>N5 - OVERSEAS</h3>
-              <p>PRIVATE LIMITED</p>
-            </div>
-          </div>
-          <p>Leading Indian Exporter & Supplier of Makhana & Organic Jaggery</p>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="#about">About Us</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Contact Info</h4>
-          <p>📍 Panipat, Harayana, India</p>
-          <p>📞 +91 9215555995</p>
-          <p>✉️ servivewithN5overseas.com</p>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2024 N5-Overseas Pvt. Ltd. All rights reserved.</p>
-      </div>
+      <p>&copy; 2025 N5-Overseas All rights reserved.</p>
     </div>
   </footer>
 
@@ -204,31 +191,9 @@
     <span class="chat-badge">1</span>
     <div class="chat-text">Enquire Now</div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
-    async function loadHomeProducts() {
-      const { data, error } = await supabaseClient
-        .from("uploads")
-        .select("firstname, image_url")
-        .limit(3)
-        .order("id", { ascending: false });
-  
-      const homeContainer = document.getElementById("home-products");
-      if (data && data.length > 0) {
-        data.forEach(item => {
-          const div = document.createElement("div");
-          div.className = "product-card";
-          div.innerHTML = `
-            <img src="${item.image_url}" alt="${item.firstname}">
-            <h4>${item.firstname}</h4>
-          `;
-          homeContainer.appendChild(div);
-        });
-      }
-    }
-    loadHomeProducts();
-  </script>
-  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
 </body>
 </html>
