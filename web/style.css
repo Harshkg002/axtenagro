@@ -9,7 +9,7 @@ body {
   font-family: "Arial", sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #2e7d32;
+  background-color: #e2e8e2;
 }
 
 .container {
@@ -259,10 +259,6 @@ body {
 }
 
 /* About Section */
-.about {
-  padding: 80px 0;
-}
-
 .about h2 {
   color: #4a7c59;
   font-size: 32px;
@@ -279,8 +275,32 @@ body {
 .about p {
   margin-bottom: 20px;
   line-height: 1.8;
-  color: #555;
+  color: #444;
 }
+
+
+
+/* About Section Styling */
+.about {
+  background: rgba(255, 255, 255, 0.9); /* fade white background */
+  border: 2px solid #58c896; /* green frame */
+  border-radius: 12px;        /* smooth corners */
+  padding: 40px;
+  margin: 40px auto;
+  max-width: 1000px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* subtle shadow */
+}
+
+.about h2, 
+.about h3, 
+.about p {
+  color: #333; /* darker text for readability */
+}
+
+
+
+
+
 
 /* Products Section */
 .products-section {
@@ -321,26 +341,66 @@ body {
   margin-bottom: 50px;
 }
 
+/* Horizontal product card container */
 .product-card {
-  background: white;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 20px 0;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.2s ease-in-out;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Image on the left */
 .product-card img {
-  width: 100%;
-  height: 220px;   /* fix the height */
-  object-fit: cover; /* crop and keep proportion */
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  width: 200px;          /* Fixed width for uniformity */
+  height: 200px;
+  object-fit: cover;
 }
+
+/* Details on the right */
+.product-details {
+  padding: 20px;
+  flex: 1;               /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-details h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.product-details p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Optional buttons styling */
+.product-details .btn {
+  padding: 8px 16px;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  width: fit-content;
+  transition: background 0.3s;
+}
+
+.product-details .btn:hover {
+  background: #256428;
+}
+
 
 
 .product-info {
@@ -369,11 +429,6 @@ body {
   margin-bottom: 15px;
 }
 
-.product-price {
-  color: #4a7c59;
-  font-weight: bold;
-  font-size: 18px;
-}
 
 .no-products {
   text-align: center;
@@ -912,4 +967,138 @@ body {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+/* Popup Enquiry Modal */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.6); /* dark overlay */
+}
+
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.3s ease;
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #4a7c59;
+  text-align: center;
+}
+
+.modal-content .form-group {
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-content button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+
+
+
+.search-bar {
+  position: relative; /* 🔥 this makes popup stay under search bar */
+}
+
+.search-popup {
+  position: absolute;
+  top: 100%;   /* place it just below the input */
+  left: 0;
+  width: 100%; /* match the search bar width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 1000;
+}
+
+
+
+.search-popup div {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search-popup div:hover {
+  background: #f2f2f2;
+}
+.search-popup img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+
+.product-card a {
+  text-decoration: none;   /* remove underline */
+  color: inherit;          /* prevent default blue */
+}
+
+.product-card h3 {
+  color: #000;   /* Product name: black */
+}
+
+.product-card p em {
+  color: #666;   /* Category: grey */
+  font-style: normal;
+}
+
+.product-card p.description {
+  color: #444;   /* Description: softer dark grey for readability */
 }

@@ -8,7 +8,7 @@
   <!-- ✅ Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="admin-container" style=" background-color: #2e7d32;">
+<body class="admin-container" style="background-color: #2e7d32;">
   <!-- Login Screen -->
   <div class="login-screen" id="loginScreen">
     <div class="login-form">
@@ -22,7 +22,7 @@
         <input type="password" id="password" placeholder="Password" required />
         <button type="submit" class="btn-primary">Login</button>
       </form>
-      <p id="loginStatus" class="error-message"style="display:none;" ></p>
+      <p id="loginStatus" class="error-message" style="display:none;"></p>
     </div>
   </div>
 
@@ -42,6 +42,12 @@
         </div>
       </form>
       <p id="status"></p>
+    </div>
+
+    <!-- 🆕 Product List Section -->
+    <div class="admin-section">
+      <h2>Existing Products</h2>
+      <div id="productList">Loading products...</div>
     </div>
   </div>
 

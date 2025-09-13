@@ -24,12 +24,127 @@
   ">
   <link rel="icon" type="image/png" href="images/favicon_white.png">
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
-  <!-- ✅ Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+    }
+    header, footer {
+      text-align: center;
+      padding: 15px;
+      background: #2e7d32;
+      color: #fff;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    .product-details-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .product-details {
+      background: #fff;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+    .product-details img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+    .product-details h2 {
+      margin: 10px 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+    .product-details p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .enquire-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .enquire-btn:hover {
+      background: #256428;
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .close-btn {
+      float: right;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #555;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .modal-content button {
+      background-color: #2e7d32;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background-color: #256428;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">N5 Overseas</a>
+    <a href="index.html" class="logo" style="color:white; font-weight:bold; text-decoration:none;">N5 Overseas</a>
     <nav>
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
@@ -43,15 +158,67 @@
     </section>
   </main>
 
+  <!-- Modal Enquiry Form -->
+  <div id="enquiryModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h3>Enquire About This Product</h3>
+      <form class="product-enquiry-form" action="https://formspree.io/f/xgvldzzv" method="POST">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" name="name" required>
+        </div>
+      
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" name="email" required>
+        </div>
+      
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" name="phone">
+        </div>
+      
+        <div class="form-group">
+          <label for="company">Company Name</label>
+          <input type="text" name="company">
+        </div>
+      
+        <div class="form-group">
+          <label for="subject">Subject *</label>
+          <select name="subject" required>
+            <option value="">Select Subject</option>
+            <option value="bulk-order">Bulk Order Inquiry</option>
+            <option value="product-info">Product Information</option>
+            <option value="export-inquiry">Export Inquiry</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea name="message" rows="4" required></textarea>
+        </div>
+      
+        <!-- Auto-fill product name -->
+        <input type="hidden" name="product" value="PRODUCT_NAME_HERE">
+      
+        <button type="submit" class="btn-primary">Send Enquiry</button>
+      </form>
+      
+    </div>
+  </div>
+
   <footer>
-    <p>© 2024 N5 Overseas. All rights reserved.</p>
+    <p>© 2025 N5 Overseas. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ Supabase Product Details Logic -->
   <script>
     const { createClient } = supabase;
     const SUPABASE_URL = "https://lvpyferhoytfcemdlvix.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2cHlmZXJob3l0ZmNlbWRsdml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzMwOTQsImV4cCI6MjA3MjcwOTA5NH0.K-Vv9sbo3TG9CL7XPKQkQIUEx18kvGh7Vqju9oH7KEU"; // replace with your actual anon key
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2cHlmZXJob3l0ZmNlbWRsdml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzMwOTQsImV4cCI6MjA3MjcwOTA5NH0.K-Vv9sbo3TG9CL7XPKQkQIUEx18kvGh7Vqju9oH7KEU";
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -59,34 +226,54 @@
 
     async function loadProduct() {
       const section = document.getElementById("product-details");
-
       if (!productId) {
         section.innerHTML = `<p style="color:red;">❌ No product ID provided.</p>`;
         return;
       }
-
       const { data, error } = await supabaseClient
         .from("uploads")
         .select("*")
         .eq("id", productId)
         .single();
-
       if (error || !data) {
         section.innerHTML = `<p style="color:red;">❌ Product not found.</p>`;
         return;
       }
-
       section.innerHTML = `
         <div class="product-details">
           <img src="${data.image_url}" alt="${data.firstname}">
           <h2>${data.firstname}</h2>
           <p><strong>Category:</strong> ${data.category}</p>
           <p>${data.description}</p>
+          <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
         </div>
       `;
+
+      // Add event listener for Enquire button
+      document.getElementById("enquireBtn").addEventListener("click", () => {
+        document.getElementById("enquiryModal").style.display = "block";
+      });
     }
 
     loadProduct();
+
+    // Modal close functionality
+    document.getElementById("closeModal").onclick = function() {
+      document.getElementById("enquiryModal").style.display = "none";
+    };
+    window.onclick = function(event) {
+      if (event.target == document.getElementById("enquiryModal")) {
+        document.getElementById("enquiryModal").style.display = "none";
+      }
+    };
+
+    // Handle form submission (for now, just close modal and log)
+    document.getElementById("enquiryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Your enquiry has been sent!");
+      document.getElementById("enquiryModal").style.display = "none";
+      this.reset();
+    });
   </script>
 </body>
 </html>
