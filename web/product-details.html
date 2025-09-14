@@ -240,14 +240,17 @@
         return;
       }
       section.innerHTML = `
-        <div class="product-details">
-          <img src="${data.image_url}" alt="${data.firstname}">
-          <h2>${data.firstname}</h2>
-          <p><strong>Category:</strong> ${data.category}</p>
-          <p>${data.description}</p>
-          <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
-        </div>
-      `;
+  <div class="product-details">
+    <img src="${data.image_url}" alt="${data.firstname}">
+    <h2>${data.firstname}</h2>
+    <p><strong>Category:</strong> ${data.category}</p>
+    <p>${data.description}</p>
+    <p><strong>Price:</strong> ₹${data.price}</p>
+    <p><strong>Unit:</strong> ${data.quantity}</p>
+    <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
+  </div>
+`;
+
 
       // Add event listener for Enquire button
       document.getElementById("enquireBtn").addEventListener("click", () => {

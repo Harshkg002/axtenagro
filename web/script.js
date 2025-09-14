@@ -19,9 +19,11 @@ const uploadSection = document.getElementById("uploadSection");
 const productList = document.getElementById("productList");
 
 // 🆕 Load and display products
+// 🆕 Load and display products (Admin version – no enquiry form)
 async function loadProducts() {
   if (!productList) return;
   productList.innerHTML = "Loading products...";
+
   const { data, error } = await supabaseClient
     .from("uploads")
     .select("id, firstname, category, description, image_url")
@@ -45,38 +47,13 @@ async function loadProducts() {
       <img src="${item.image_url}" alt="${item.firstname}" style="max-width:80px;border-radius:4px;">
       <div>
         <h4>${item.firstname}</h4>
-        <p>${item.category}</p>
+        <p><b>${item.category}</b></p>
         <p>${item.description}</p>
-
-        <!-- Product Enquiry Form -->
-        <form class="product-enquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <input type="hidden" name="product" value="${item.firstname}">
-          
-          <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" name="name" required>
-          </div>
-          <div class="form-group">
-            <label>Email *</label>
-            <input type="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="tel" name="phone">
-          </div>
-          <div class="form-group">
-            <label>Company</label>
-            <input type="text" name="company">
-          </div>
-          <div class="form-group">
-            <label>Message *</label>
-            <textarea name="message" required></textarea>
-          </div>
-
-          <button type="submit" class="btn-primary">Send Enquiry</button>
-        </form>
       </div>
-      <button class="delete-btn" data-id="${item.id}" style="background:red;color:white;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;">Delete</button>
+      <button class="delete-btn" data-id="${item.id}" 
+        style="background:red;color:white;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;">
+        Delete
+      </button>
     </div>
   `
     )
@@ -86,10 +63,8 @@ async function loadProducts() {
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => deleteProduct(btn.dataset.id));
   });
-
-  // Attach enquiry form handlers
-  attachProductEnquiryHandlers();
 }
+
 
 // 🆕 Delete product
 async function deleteProduct(id) {
@@ -153,7 +128,10 @@ if (uploadForm) {
     const firstname = document.getElementById("firstname")?.value.trim();
     const category = document.getElementById("category")?.value.trim();
     const description = document.getElementById("description")?.value.trim();
+    const price = parseFloat(document.getElementById("price")?.value.trim());
+    const quantity = document.getElementById("quantity")?.value.trim();
     const file = document.getElementById("photo")?.files[0];
+
 
     if (!firstname || !category || !description || !file) {
       if (statusEl) statusEl.textContent = "⚠️ Please fill all fields.";
@@ -185,9 +163,11 @@ if (uploadForm) {
           firstname,
           category,
           description,
+          price,
+          quantity,
           image_url: publicURL.publicUrl,
           user_id: user.id,
-        },
+        }
       ]);
 
       if (insertError) throw insertError;
