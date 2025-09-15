@@ -30,11 +30,11 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f8f8f8;
+      background: #e2e8e2;
     }
     header, footer {
       text-align: center;
-      padding: 15px;
+      padding: 0px;
       background: #2e7d32;
       color: #fff;
     }
@@ -50,46 +50,69 @@
       padding: 40px 20px;
     }
     .product-details {
-      background: #fff;
-      max-width: 600px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
-    }
-    .product-details img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      object-fit: cover;
-    }
-    .product-details h2 {
-      margin: 10px 0;
-      font-size: 1.8rem;
-      color: #333;
-    }
-    .product-details p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 10px;
-      color: #555;
-    }
-    .enquire-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #2e7d32;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s;
-    }
-    .enquire-btn:hover {
-      background: #256428;
-    }
+  display: flex;
+  flex-direction: column;  /* stack image+info on top, description below */
+  background: #fff;
+  max-width: 1000px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  gap: 20px;
+}
+
+.product-top {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.product-top img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.product-meta {
+  flex: 1;
+  text-align: left;
+}
+
+.product-meta h2 {
+  margin: 0 0 10px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.product-meta p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.enquire-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+.enquire-btn:hover {
+  background: #256428;
+}
+
+.product-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
     /* Modal Styles */
     .modal {
       display: none;
@@ -143,14 +166,37 @@
   </style>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="logo" style="color:white; font-weight:bold; text-decoration:none;">N5 Overseas</a>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="contact.html">Contact</a>
+  <header class="header">
+    <div class="top-bar">
+      <p>"N5 Overseas PVT LTD is a Leading Indian Exporter & Supplier of Makhana & Organic Jaggery"</p>
+    </div>
+    <div class="gst-bar">
+      <p>GST No. 27ABCCA7637DIZR | IEC code ABCCA7637D</p>
+    </div>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo.png" alt="N5 Overseas Logo" />
+          <div class="logo-text">
+            <h2>N5 Overseas</h2>
+            <p>PRIVATE LIMITED</p>
+          </div>
+        </div>
+        <div class="search-bar">
+          <button class="search-btn">🔍</button>
+          <input type="text" id="search-input" placeholder="Search products..." />
+        </div>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html">HOME</a>
+        <a href="products.html" class="active">OUR PRODUCTS</a>
+        <a href="#certificate">CERTIFICATE</a>
+        <a href="#about">ABOUT US</a>
+        <a href="contact.html">BULK ENQUIRY</a>
+      </div>
     </nav>
   </header>
+
 
   <main>
     <section id="product-details" class="product-details-section">
@@ -241,15 +287,23 @@
       }
       section.innerHTML = `
   <div class="product-details">
-    <img src="${data.image_url}" alt="${data.firstname}">
-    <h2>${data.firstname}</h2>
-    <p><strong>Category:</strong> ${data.category}</p>
-    <p>${data.description}</p>
-    <p><strong>Price:</strong> ₹${data.price}</p>
-    <p><strong>Unit:</strong> ${data.quantity}</p>
-    <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
+    <div class="product-top">
+      <img src="${data.image_url}" alt="${data.firstname}">
+      <div class="product-meta">
+        <h2>${data.firstname}</h2>
+        <p><strong>Category:</strong> ${data.category}</p>
+        <p><strong>Price:</strong> ₹${data.price}</p>
+        <p><strong>Unit:</strong> ${data.quantity}</p>
+        <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
+      </div>
+    </div>
+    <div class="product-description">
+      <p>${data.description}</p>
+    </div>
   </div>
 `;
+
+
 
 
       // Add event listener for Enquire button
