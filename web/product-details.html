@@ -45,15 +45,15 @@
     }
     .product-details-section {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: 40px 20px;
     }
-    .product-details {
+  .product-details {
   display: flex;
   flex-direction: column;  /* stack image+info on top, description below */
   background: #fff;
-  max-width: 1000px;
+  max-width: none;
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -163,6 +163,103 @@
     .modal-content button:hover {
       background-color: #256428;
     }
+    .product-page {
+  display: flex;
+  gap: 80px;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.main-product {
+  flex: 2.8;  /* takes more space */
+}
+
+.related-products {
+  flex:1;  /* smaller sidebar */
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.related-products h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.related-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.related-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.related-item p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+.related-item:hover p {
+  color: #2e7d32;
+}
+.related-item {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.related-item:hover {
+  transform: scale(1.05);                /* pop effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  /* soft shadow */
+  background-color: #f9f9f9;             /* slight bg highlight */
+}
+.related-item img {
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+}
+
+.related-item:hover img {
+  transform: scale(1.1);
+}
+.enquire-btn {
+  background-color: #2e7d32;       /* Amazon-style orange */
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.enquire-btn:hover {
+  transform: scale(1.08);          /* pop effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background-color: #256428;       /* darker shade on hover */
+}
+
+.enquire-btn:active {
+  transform: scale(0.95);          /* press-down effect */
+}
+.related-products h2{
+  text-align: center;
+}
   </style>
 </head>
 <body>
@@ -199,9 +296,20 @@
 
 
   <main>
+    <div class="product-page">
+  <div class="main-product">
+    <!-- Product details code -->
     <section id="product-details" class="product-details-section">
       <p>Loading product...</p>
     </section>
+  </div>
+  <aside class="related-products">
+    <h2 >Related Products</h2>
+    <div class="related-list">
+      <!-- Insert related items dynamically -->
+    </div>
+  </aside>
+</div>
   </main>
 
   <!-- Modal Enquiry Form -->
@@ -270,47 +378,110 @@
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
 
-    async function loadProduct() {
-      const section = document.getElementById("product-details");
-      if (!productId) {
-        section.innerHTML = `<p style="color:red;">❌ No product ID provided.</p>`;
-        return;
-      }
-      const { data, error } = await supabaseClient
-        .from("uploads")
-        .select("*")
-        .eq("id", productId)
-        .single();
-      if (error || !data) {
-        section.innerHTML = `<p style="color:red;">❌ Product not found.</p>`;
-        return;
-      }
-      section.innerHTML = `
-  <div class="product-details">
-    <div class="product-top">
-      <img src="${data.image_url}" alt="${data.firstname}">
-      <div class="product-meta">
-        <h2>${data.firstname}</h2>
-        <p><strong>Category:</strong> ${data.category}</p>
-        <p><strong>Price:</strong> ₹${data.price}</p>
-        <p><strong>Unit:</strong> ${data.quantity}</p>
-        <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
+    async function loadProduct(id = productId) {
+  const section = document.getElementById("product-details");
+  if (!id) {
+    section.innerHTML = `<p style="color:red;">❌ No product ID provided.</p>`;
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("uploads")              // ✅ use uploads table
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) {
+    section.innerHTML = `<p style="color:red;">❌ Product not found.</p>`;
+    return;
+  }
+
+  section.innerHTML = `
+    <div class="product-details">
+      <div class="product-top">
+        <img src="${data.image_url}" alt="${data.firstname}">
+        <div class="product-meta">
+          <h2>${data.firstname}</h2>
+          <p><strong>Category:</strong> ${data.category}</p>
+          <p><strong>Price:</strong> ₹${data.price}</p>
+          <p><strong>Unit:</strong> ${data.quantity}</p>
+          <button class="enquire-btn" id="enquireBtn">Enquire Now</button>
+        </div>
+      </div>
+      <div class="product-description">
+        <p>${data.description}</p>
       </div>
     </div>
-    <div class="product-description">
-      <p>${data.description}</p>
-    </div>
-  </div>
-`;
+  `;
+
+  // Add event listener for Enquire button
+  document.getElementById("enquireBtn").addEventListener("click", () => {
+    document.getElementById("enquiryModal").style.display = "block";
+  });
+
+  // Load related products
+  loadRelatedProducts(data.category, data.id);
+}
 
 
+async function loadRelatedProducts(category, excludeId) {
+  // 1. Get products from the same category
+  const { data: sameCategory, error: err1 } = await supabaseClient
+    .from("uploads")              // ✅ use uploads table
+    .select("*")
+    .eq("category", category)
+    .neq("id", excludeId)
+    .limit(10);
 
+  if (err1) {
+    console.error("Error loading related products:", err1);
+    return;
+  }
 
-      // Add event listener for Enquire button
-      document.getElementById("enquireBtn").addEventListener("click", () => {
-        document.getElementById("enquiryModal").style.display = "block";
-      });
+  let related = sameCategory || [];
+
+  // 2. If less than 5, fetch more from other categories
+  if (related.length < 5) {
+    const needed = 5 - related.length;
+
+    const { data: others, error: err2 } = await supabaseClient
+      .from("uploads")
+      .select("*")
+      .neq("category", category)
+      .neq("id", excludeId)
+      .limit(needed);
+
+    if (err2) {
+      console.error("Error loading fallback products:", err2);
+      return;
     }
+
+    related = related.concat(others || []);
+  }
+
+  // 3. Render related products
+  const relatedList = document.querySelector(".related-list"); // ✅ fix selector
+  relatedList.innerHTML = "";
+
+  if (related.length === 0) {
+    relatedList.innerHTML = "<p>No related products found.</p>";
+    return;
+  }
+
+  related.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "related-item";
+    div.innerHTML = `
+      <img src="${item.image_url}" alt="${item.firstname}">
+      <p>${item.firstname}</p>
+    `;
+    div.addEventListener("click", () => {
+      loadProduct(item.id); // ✅ reload product dynamically
+    });
+    relatedList.appendChild(div);
+  });
+}
+
 
     loadProduct();
 
