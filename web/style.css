@@ -119,7 +119,7 @@ body {
 
 .nav-menu a {
   text-decoration: none;
-  color: #0333;
+  color: rgba(29, 45, 45, 0.2);
   font-weight: 500;
   padding: 10px 0;
   border-bottom: 2px solid transparent;
