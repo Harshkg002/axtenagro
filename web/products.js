@@ -13,7 +13,7 @@ async function fetchProducts() {
 
   const { data, error } = await supabaseClient
     .from("uploads")
-    .select("id, firstname, category, description, price, quantity, image_url")
+    .select("id, firstname, category, description, image_url")
     .order("id", { ascending: false });
 
   if (error) {
@@ -42,8 +42,6 @@ async function fetchProducts() {
         <h3>${item.firstname}</h3>
         <p><em>${item.category}</em></p>
         <p class="description">${shortDesc}${needsEllipsis ? "..." : ""}</p>
-        <p><strong>Price:</strong> ₹${item.price}</p>
-        <p><strong>Unit:</strong> ${item.quantity}</p>
         <span class="read-more">Read more</span>
       </a>
     `;
