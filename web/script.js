@@ -268,7 +268,7 @@ async function loadHomeProducts() {
   const { data, error } = await supabaseClient
     .from("uploads")
     .select("id, firstname, image_url")
-    .limit(6)
+    .limit(3)
     .order("id", { ascending: false });
 
   const homeContainer = document.getElementById("home-products");
@@ -280,11 +280,16 @@ async function loadHomeProducts() {
         <img src="${item.image_url}" alt="${item.firstname}">
         <h4>${item.firstname}</h4>
       `;
+      div.addEventListener("click", () => {
+        window.location.href = `product-details.html?id=${item.id}`;  // ✅ fixed
+      });
       homeContainer.appendChild(div);
     });
   }
 }
+
 loadHomeProducts();
+
 
 
 
