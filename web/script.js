@@ -268,7 +268,7 @@ async function loadHomeProducts() {
   const { data, error } = await supabaseClient
     .from("uploads")
     .select("id, firstname, image_url")
-    .limit(3)
+    .limit(6)
     .order("id", { ascending: false });
 
   const homeContainer = document.getElementById("home-products");
@@ -333,44 +333,10 @@ searchInput.addEventListener("input", async function () {
 
 function showProductCard(item) {
   searchPopup.style.display = "none";
-
-  // Build a unique anchor ID for the product
-  const anchorId = `product-${item.id}`;
-
-  // Check if the product card already exists in the DOM
-  let productCard = document.getElementById(anchorId);
-
-  if (!productCard) {
-    const homeContainer = document.getElementById("home-products");
-
-    // Clear the container to focus on the clicked product
-    homeContainer.innerHTML = "";
-
-    // Create and append the product card
-    productCard = document.createElement("div");
-    productCard.className = "product-card";
-    productCard.id = anchorId; // unique id for scrolling
-    productCard.innerHTML = `
-      <img src="${item.image_url}" alt="${item.firstname}">
-      <h4>${item.firstname}</h4>
-      <p>Category: ${item.category}</p>
-      <p>${item.description}</p>
-    `;
-    homeContainer.appendChild(productCard);
-  }
-
-  // Smoothly scroll the user to the product preview section
-  document.querySelector(".products-preview").scrollIntoView({ behavior: "smooth" });
-
-  // Highlight the product card briefly for clarity
-  productCard.classList.add("highlight");
-  setTimeout(() => productCard.classList.remove("highlight"), 2000);
-
-  // If the user is on a different page (like about.html), redirect to index.html#product-id
-  if (!window.location.pathname.endsWith("index.html") && !window.location.pathname.endsWith("/")) {
-    window.location.href = `index.html#${anchorId}`;
-  }
+  // ✅ Go directly to the product detail page
+  window.location.href = `product-details.html?id=${item.id}`;
 }
+
 
 
 // Close popup when clicked outside

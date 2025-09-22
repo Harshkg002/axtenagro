@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
+  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>About — N5 Overseas</title>
   <meta name="description" content="N5 Overseas — India's exporter of fresh fruits & vegetables, Makhan, Sattu, Organic Jaggery, Non-GMO Maize. Quality from farm to doorstep." />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="about.css" />
+
 </head>
 <body>
     <header class="header">
@@ -23,25 +25,24 @@
               <img src="images/logo.png" alt="N5 overseas Logo">
               <div class="logo-text">
                 <h2>N5-Overseas</h2>
-                <p>PRIVATE LIMITED</p>
+                <p></p>
               </div>
             </div>
     
             <!-- Updated Search Bar -->
             <div class="search-bar">
-              <input type="text" id="search-input" placeholder="Search for products...">
-              <button id="search-btn" class="search-btn">🔍</button>
-            
-              <!-- Search Popup -->
+              <input type="text" id="search-input" placeholder="Search products..." />
+              <button class="search-btn">🔍</button>
               <div id="search-popup" class="search-popup"></div>
             </div>
+            
             
           </div>
     
           <div class="nav-menu">
             <a href="index.html">HOME</a>
             <a href="products.html">OUR PRODUCTS</a>
-            <a href="#certificate">CERTIFICATE</a>
+            <a href="certificate.html">CERTIFICATE</a>
             <a href="about.html" class="active">ABOUT US</a>
             <a href="contact.html">BULK ENQUIRY</a>
           </div>
@@ -55,16 +56,16 @@
         <div class="hero-text">
           <h1>Welcome to N5 Overseas</h1>
           <p class="lede">
-            One of India's leading exporters of fresh fruits and vegetables. We specialize in Makhan, Sattu, Organic Jaggery and Non-GMO Certified Maize — delivering premium produce from farm to your doorstep.
+            One of India's leading exporters of Agriculture Products. We specialize in Makhan, Sattu, Organic Jaggery and Non-GMO Certified Maize — delivering premium produce from farm to your doorstep.
           </p>
           <p>
             We partner with industry leaders to maintain international quality standards and ensure fast, reliable logistics from our strategic location in Panipat.
           </p>
-          <a href="/contact" class="btn btn-cta">Request a Bulk Quotation</a>
+          <a href="contact.html" class="btn btn-cta">Request a Bulk Quotation</a>
         </div>
 
         <figure class="hero-image">
-            <img src="C:\Users\Harash Kr. Gupta\Downloads\Aksh site\axtenagro\web\images\unnamed-1.png" alt="Agri products ready for export">
+            <img src="images/unnamed-1.png" alt="Agri products">
             <figcaption class="sr-only">Table grapes and fresh vegetables</figcaption>
           </figure>
           
@@ -98,7 +99,7 @@
     <section class="section container location">
       <h2>Strategic Location & Logistics</h2>
       <p>
-        Based in Panipat — the hub for much of India's grape, onion, and vegetable production — we benefit from a consistent supply chain and excellent access to logistics. With an international airport approximately two hours away, we offer seamless connectivity for global shipments and expedited delivery.
+        Based in Panipat — the hub for much of India's Agriculture production — we benefit from a consistent supply chain and excellent access to logistics. With an international airport approximately two hours away, we offer seamless connectivity for global shipments and expedited delivery.
       </p>
 
       <div class="cta-row">
@@ -106,7 +107,7 @@
           <strong>Headquarters:</strong> Panipat, India
         </div>
         <div>
-          <strong>Export focus:</strong> Fresh fruits, vegetables, Makhan, Sattu, Organic Jaggery, Non-GMO Maize
+          <strong>Export focus:</strong> Makhan, Sattu, Organic Jaggery, Non-GMO Maize
         </div>
       </div>
     </section>
@@ -118,7 +119,7 @@
         Choose N5 Overseas for quality you can trust — from farm to your doorstep. We combine modern farming practices, rigorous quality checks, and reliable logistics to support bulk orders for international buyers and distributors.
       </p>
 
-      <a href="/contact" class="btn btn-primary">Speak with our Export Team</a>
+      <a href="contact.html" class="btn btn-primary">Speak with our Export Team</a>
     </section>
   </main>
 
@@ -131,15 +132,14 @@
       <nav aria-label="Footer navigation">
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
-        <a href="/contact">Contact</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </div>
     <div class="copyright">&copy; <span id="year"></span> N5 Overseas — All rights reserved.</div>
   </footer>
 
-  <script>
-    // Small script for dynamic year and accessible focus style improvements
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js?v=1.5"></script>
 </body>
 </html>
