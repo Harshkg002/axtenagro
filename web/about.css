@@ -84,4 +84,11 @@ a { color:inherit; text-decoration:none; }
   .nav { display:none; } /* hide nav on very small screens - replace with hamburger if needed */
   .brand { font-size:1rem; }
   .image-placeholder { height:180px; }
+  /* Reduce hero image size on small screens */
+  .hero-image img {
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
 }

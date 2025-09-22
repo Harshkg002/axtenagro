@@ -64,6 +64,18 @@
       font-weight: bold;
       font-size: 0.85rem;
     }
+    /* Mobile-specific layout for products page: 2 items per row */
+    @media (max-width: 600px) {
+      #products-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px;
+      }
+      /* Hide long description on mobile; keep name and category */
+      #products-container .product-card p.description,
+      #products-container .product-card .read-more {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>

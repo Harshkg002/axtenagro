@@ -267,7 +267,7 @@ function attachProductEnquiryHandlers() {
 async function loadHomeProducts() {
   const { data, error } = await supabaseClient
     .from("uploads")
-    .select("id, firstname, image_url")
+    .select("id, firstname, category, image_url")
     .limit(6)
     .order("id", { ascending: false });
 
@@ -279,6 +279,7 @@ async function loadHomeProducts() {
       div.innerHTML = `
         <img src="${item.image_url}" alt="${item.firstname}">
         <h4>${item.firstname}</h4>
+        <p class="home-category"><em class="category">${item.category || ""}</em></p>
       `;
       div.addEventListener("click", () => {
         window.location.href = `product-details.html?id=${item.id}`;  // ✅ fixed

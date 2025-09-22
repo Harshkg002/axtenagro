@@ -260,6 +260,29 @@
 .related-products h2{
   text-align: center;
 }
+/* Mobile improvements */
+@media (max-width: 600px) {
+  .product-page {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 10px;
+  }
+  .product-top {
+    flex-direction: column;
+    align-items: center;
+  }
+  .product-top img {
+    max-width: 100%;
+    width: 100%;
+  }
+  .product-meta {
+    width: 100%;
+    text-align: left;
+  }
+  .product-description {
+    font-size: 0.95rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -494,7 +517,8 @@ async function loadRelatedProducts(category, excludeId) {
     };
 
     // Handle form submission (for now, just close modal and log)
-    document.getElementById("enquiryForm").addEventListener("submit", function(e) {
+    // Fix: target the form inside the modal by class (matches markup)
+    document.querySelector(".product-enquiry-form").addEventListener("submit", function(e) {
       e.preventDefault();
       alert("Your enquiry has been sent!");
       document.getElementById("enquiryModal").style.display = "none";
