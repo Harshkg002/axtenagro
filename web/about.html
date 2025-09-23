@@ -11,43 +11,45 @@
 
 </head>
 <body>
-    <header class="header">
-        <div class="top-bar">
-          <p>"N5-Overseas is a Leading Indian Exporter & Supplier of Makhana & Onion Garlic Powder"</p>
-        </div>
-        <div class="gst-bar">
-          <p>GST No. 06EAIPS2080E2ZO | IEC code EAIPS2080E</p>
-        </div>
-    
-        <nav class="navbar">
-          <div class="nav-container">
-            <div class="logo">
-              <img src="images/logo.png" alt="N5 overseas Logo">
-              <div class="logo-text">
-                <h2>N5-Overseas</h2>
-                <p></p>
-              </div>
-            </div>
-    
-            <!-- Updated Search Bar -->
-            <div class="search-bar">
-              <input type="text" id="search-input" placeholder="Search products..." />
-              <button class="search-btn">🔍</button>
-              <div id="search-popup" class="search-popup"></div>
-            </div>
-            
-            
+  <header class="header">
+    <div class="top-bar">
+      <p>"N5-Overseas is a Leading Indian Exporter & Supplier of Makhana & Onion Garlic Powder"</p>
+    </div>
+    <div class="gst-bar">
+      <p>GST No. 06EAIPS2080E2ZO | IEC code EAIPS2080E</p>
+    </div>
+  
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo.png" alt="N5 overseas Logo">
+          <div class="logo-text">
+            <h2>N5-Overseas</h2>
+            <p></p>
           </div>
-    
-          <div class="nav-menu">
-            <a href="index.html">HOME</a>
-            <a href="products.html">OUR PRODUCTS</a>
-            <a href="certificate.html">CERTIFICATE</a>
-            <a href="about.html" class="active">ABOUT US</a>
-            <a href="contact.html">BULK ENQUIRY</a>
-          </div>
-        </nav>
-      </header>
+        </div>
+  
+        <!-- Updated Search Bar -->
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search products..." />
+          <button class="search-btn">🔍</button>
+          <div id="search-popup" class="search-popup"></div>
+        </div>
+  
+        <div class="site-title">N5-Overseas</div>
+        <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
+      </div>
+  
+      <div class="nav-menu">
+        <a href="index.html">HOME</a>
+        <a href="products.html">OUR PRODUCTS</a>
+        <a href="certificate.html">CERTIFICATE</a>
+        <a href="about.html" class="active">ABOUT US</a>
+        <a href="contact.html">BULK ENQUIRY</a>
+      </div>
+    </nav>
+  </header>
+  
 
   <main>
     <!-- Hero / Intro -->
@@ -68,7 +70,7 @@
             <img src="images/unnamed-1.png" alt="Agri products">
             <figcaption class="sr-only">Table grapes and fresh vegetables</figcaption>
           </figure>
-          
+          <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
       </div>
     </section>
 
@@ -122,6 +124,7 @@
       <a href="contact.html" class="btn btn-primary">Speak with our Export Team</a>
     </section>
   </main>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <footer class="site-footer">
     <div class="container footer-grid">
@@ -140,6 +143,6 @@
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js?v=1.5"></script>
+  <script src="script.js?v=1.6"></script>
 </body>
 </html>

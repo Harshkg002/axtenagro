@@ -18,7 +18,6 @@ const loginScreen = document.getElementById("loginScreen");
 const uploadSection = document.getElementById("uploadSection");
 const productList = document.getElementById("productList");
 
-// 🆕 Load and display products
 // 🆕 Load and display products (Admin version – no enquiry form)
 async function loadProducts() {
   if (!productList) return;
@@ -64,7 +63,6 @@ async function loadProducts() {
     btn.addEventListener("click", () => deleteProduct(btn.dataset.id));
   });
 }
-
 
 // 🆕 Delete product
 async function deleteProduct(id) {
@@ -128,10 +126,7 @@ if (uploadForm) {
     const firstname = document.getElementById("firstname")?.value.trim();
     const category = document.getElementById("category")?.value.trim();
     const description = document.getElementById("description")?.value.trim();
-    const price = parseFloat(document.getElementById("price")?.value.trim());
-    const quantity = document.getElementById("quantity")?.value.trim();
     const file = document.getElementById("photo")?.files[0];
-
 
     if (!firstname || !category || !description || !file) {
       if (statusEl) statusEl.textContent = "⚠️ Please fill all fields.";
@@ -180,8 +175,56 @@ if (uploadForm) {
   });
 }
 
-// ✅ Enquiry popup + product enquiry logic
+// ✅ Mobile menu
+function initMobileMenu() {
+  const navOverlay = document.getElementById("navOverlay");
+  const setExpanded = (btns, expanded) => {
+    btns.forEach((b) => b.setAttribute("aria-expanded", expanded ? "true" : "false"));
+  };
+  const closeAnyMenu = () => {
+    document.querySelectorAll(".nav-menu.open").forEach(m => m.classList.remove("open"));
+    if (navOverlay) navOverlay.classList.remove("open");
+    setExpanded(document.querySelectorAll("#menuToggle, .hamburger"), false);
+    document.body.classList.remove("drawer-open");
+  };
+  const openForButton = (btn) => {
+    const navbar = btn.closest(".navbar");
+    const menu = navbar ? navbar.querySelector(".nav-menu") : document.querySelector(".nav-menu");
+    if (!menu) return;
+    const isOpen = menu.classList.contains("open");
+    closeAnyMenu();
+    if (!isOpen) {
+      menu.classList.add("open");
+      if (navOverlay) navOverlay.classList.add("open");
+      setExpanded([btn], true);
+      document.body.classList.add("drawer-open");
+    }
+  };
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("#menuToggle, .hamburger");
+    if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openForButton(btn);
+      return;
+    }
+    if (!e.target.closest(".nav-menu")) {
+      closeAnyMenu();
+    }
+  });
+  document.querySelectorAll("#menuToggle, .hamburger").forEach((btn) => {
+    btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openForButton(btn); });
+    btn.addEventListener("touchend", (e) => { e.preventDefault(); e.stopPropagation(); openForButton(btn); }, { passive: false });
+  });
+  if (navOverlay) {
+    navOverlay.addEventListener("click", closeAnyMenu);
+  }
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAnyMenu(); });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  initMobileMenu();
+
   const modal = document.getElementById("enquiryModal");
   const chatBtn = document.querySelector(".chat-btn");
   const closeBtn = document.querySelector(".close-btn");
@@ -205,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ✅ Popup form submission via Formspree
   if (enquiryForm) {
     enquiryForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -260,9 +302,6 @@ function attachProductEnquiryHandlers() {
   });
 }
 
-
-
-
 // Load preview products
 async function loadHomeProducts() {
   const { data, error } = await supabaseClient
@@ -282,17 +321,13 @@ async function loadHomeProducts() {
         <p class="home-category"><em class="category">${item.category || ""}</em></p>
       `;
       div.addEventListener("click", () => {
-        window.location.href = `product-details.html?id=${item.id}`;  // ✅ fixed
+        window.location.href = `product-details.html?id=${item.id}`;
       });
       homeContainer.appendChild(div);
     });
   }
 }
-
 loadHomeProducts();
-
-
-
 
 // Search popup
 const searchInput = document.getElementById("search-input");
@@ -334,53 +369,48 @@ searchInput.addEventListener("input", async function () {
 
 function showProductCard(item) {
   searchPopup.style.display = "none";
-  // ✅ Go directly to the product detail page
   window.location.href = `product-details.html?id=${item.id}`;
 }
 
-
-
-// Close popup when clicked outside
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".search-bar") && !e.target.closest("#search-popup")) {
     searchPopup.style.display = "none";
   }
 });
 
-
 let slideIndex = 0;
-
 function showSlide(n) {
   const slides = document.querySelectorAll(".slide");
   const dots = document.querySelectorAll(".dot");
 
-  // wrap around
   if (n >= slides.length) slideIndex = 0;
   if (n < 0) slideIndex = slides.length - 1;
 
-  // hide all
-  slides.forEach(s => (s.style.display = "none"));
+  slides.forEach((s, i) => {
+    s.classList.remove("active");
+    s.style.display = i === slideIndex ? "block" : "none";
+  });
   dots.forEach(d => d.classList.remove("active"));
 
-  // show current
   slides[slideIndex].style.display = "block";
+  slides[slideIndex].classList.add("active");
   dots[slideIndex].classList.add("active");
 }
 
-// initialize + auto-play
 document.addEventListener("DOMContentLoaded", () => {
-  showSlide(slideIndex);
-
-  setInterval(() => {
-    slideIndex++;
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  if (slides.length) {
+    slides.forEach((s, i) => (s.style.display = i === 0 ? "block" : "none"));
+    if (dots.length) {
+      dots.forEach((d, i) => d.onclick = () => { slideIndex = i; showSlide(slideIndex); });
+    }
     showSlide(slideIndex);
-  }, 3000); // change every 3s
+    setInterval(() => { slideIndex++; showSlide(slideIndex); }, 3000);
+  }
 });
 
-// when user clicks dots
 function currentSlide(n) {
   slideIndex = n - 1;
   showSlide(slideIndex);
 }
-
-

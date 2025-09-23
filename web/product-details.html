@@ -260,6 +260,18 @@
 .related-products h2{
   text-align: center;
 }
+/* Back button under logo (left) */
+.back-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 0 10px;
+}
+.back-row a {
+  color: #2e7d32;
+  font-weight: 600;
+  text-decoration: none;
+}
 /* Mobile improvements */
 @media (max-width: 600px) {
   .product-page {
@@ -302,10 +314,8 @@
             <p></p>
           </div>
         </div>
-        <div class="search-bar">
-          <input type="text" id="search-input" placeholder="Search products..." />
-          <button class="search-btn">🔍</button>
-        </div>
+        <div class="site-title">N5-Overseas</div>
+        <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
       </div>
       <div class="nav-menu">
         <a href="index.html">HOME</a>
@@ -319,6 +329,9 @@
 
 
   <main>
+    <div class="back-row">
+      <a href="products.html">← Back to Products</a>
+    </div>
     <div class="product-page">
   <div class="main-product">
     <!-- Product details code -->
@@ -525,5 +538,6 @@ async function loadRelatedProducts(category, excludeId) {
       this.reset();
     });
   </script>
+  <script src="script.js?v=1.6"></script>
 </body>
 </html>
