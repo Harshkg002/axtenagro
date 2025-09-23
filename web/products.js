@@ -28,12 +28,13 @@ async function fetchProducts() {
   } else {
     noProducts.style.display = "none";
   }
+
   container.innerHTML = "";
   data.forEach(item => {
     const words = (item.description || "").split(/\s+/);
     const shortDesc = words.slice(0, 15).join(" ");
     const needsEllipsis = words.length > 15;
-  
+
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
@@ -46,35 +47,58 @@ async function fetchProducts() {
       </a>
     `;
     container.appendChild(card);
-  });  
+  });
 }
 
-// Search filter
-function initSearch() {
-  const searchInput = document.getElementById("search-input");
-  const searchBtn = document.querySelector(".search-btn");
+/* -----------------------------
+   🔍 Popup Search (same as home)
+--------------------------------*/
+const searchInput = document.getElementById("search-input");
+const searchPopup = document.getElementById("search-popup");
 
-  function performSearch() {
-    const q = (searchInput.value || "").trim().toLowerCase();
-    const cards = document.querySelectorAll(".product-card");
-    let found = false;
+if (searchInput && searchPopup) {
+  searchInput.addEventListener("input", async function () {
+    const query = this.value.trim().toLowerCase();
+    if (!query) {
+      searchPopup.style.display = "none";
+      return;
+    }
 
-    cards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(q) ? "" : "none";
-      if (text.includes(q)) found = true;
+    const { data, error } = await supabaseClient
+      .from("uploads")
+      .select("id, firstname, image_url")
+      .ilike("firstname", `%${query}%`)
+      .limit(5);
+
+    if (error || !data || data.length === 0) {
+      searchPopup.innerHTML = "<div>No results found</div>";
+      searchPopup.style.display = "block";
+      return;
+    }
+
+    searchPopup.innerHTML = "";
+    data.forEach(item => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <img src="${item.image_url}" alt="${item.firstname}">
+        <span>${item.firstname}</span>
+      `;
+      div.addEventListener("click", () => {
+        window.location.href = `product-details.html?id=${item.id}`;
+      });
+      searchPopup.appendChild(div);
     });
+    searchPopup.style.display = "block";
+  });
 
-    noProducts.style.display = found ? "none" : "block";
-  }
-
-  searchBtn.addEventListener("click", performSearch);
-  searchInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") performSearch();
+  // Close popup if click outside
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search-bar") && !e.target.closest("#search-popup")) {
+      searchPopup.style.display = "none";
+    }
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchProducts();
-  initSearch();
 });

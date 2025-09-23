@@ -28,7 +28,7 @@
   <style>
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       padding: 20px;
     }
@@ -45,9 +45,10 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
     .product-card img {
-      max-width: 100%;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
       border-radius: 6px;
-      height: 150px;
       object-fit: cover;
     }
     .product-card h3 {
@@ -63,6 +64,18 @@
       color: #0077cc;
       font-weight: bold;
       font-size: 0.85rem;
+    }
+    /* Mobile-specific layout for products page: 2 items per row */
+    @media (max-width: 600px) {
+      #products-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px;
+      }
+      /* Hide long description on mobile; keep name and category */
+      #products-container .product-card p.description,
+      #products-container .product-card .read-more {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -83,15 +96,18 @@
             <p></p>
           </div>
         </div>
+        <div class="site-title">N5-Overseas</div>
+        <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
         <div class="search-bar">
           <input type="text" id="search-input" placeholder="Search for products..." />
           <button class="search-btn">🔍</button>
+          <div id="search-popup" class="search-popup"></div> <!-- ✅ -->
         </div>
       </div>
       <div class="nav-menu">
         <a href="index.html">HOME</a>
         <a href="products.html" class="active">OUR PRODUCTS</a>
-        <a href="#certificate">CERTIFICATE</a>
+        <a href="certificate.html">CERTIFICATE</a>
         <a href="about.html">ABOUT US</a>
         <a href="contact.html">BULK ENQUIRY</a>
       </div>
@@ -110,6 +126,7 @@
       </div>
     </div>
   </section>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <footer class="footer">
     <div class="container">
@@ -130,7 +147,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Products</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a href="#about">About Us</a></li>
+            <li><a href="about.html">About Us</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -149,5 +166,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Link external JS -->
   <script src="products.js?v=1.4"></script>
+  <script src="script.js?v=1.6"></script>
 </body>
 </html>

@@ -30,8 +30,27 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon_white.png">
   <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
+  
 </head>
 <body>
+  <style>
+    /* Mobile-specific overrides for home page */
+    @media (max-width: 600px) {
+      #home-products {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px;
+      }
+    }
+    /* Desktop: ensure 3 across for home products */
+    @media (min-width: 769px) {
+      #home-products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+  </style>
   <!-- Header -->
   <header class="header">
     <div class="top-bar">
@@ -47,9 +66,12 @@
           <img src="images/logo.png" alt="N5 overseas Logo">
           <div class="logo-text">
             <h2>N5-Overseas</h2>
-            <p>PRIVATE LIMITED</p>
+            <p></p>
           </div>
         </div>
+
+        <div class="site-title">N5-Overseas</div>
+        <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
 
         <!-- Updated Search Bar -->
         <div class="search-bar">
@@ -65,7 +87,7 @@
       <div class="nav-menu">
         <a href="index.html" class="active">HOME</a>
         <a href="products.html">OUR PRODUCTS</a>
-        <a href="#certificate">CERTIFICATE</a>
+        <a href="certificate.html">CERTIFICATE</a>
         <a href="about.html">ABOUT US</a>
         <a href="contact.html">BULK ENQUIRY</a>
       </div>
@@ -82,14 +104,14 @@
           <h2>Organic Jaggery</h2>
         </div>
       </div>
-      <div class="slide active">
-        <img src="images\unnamed-2.png" alt="Onion Garlic powder">
+      <div class="slide">
+        <img src="images/unnamed-2.png" alt="Onion Garlic powder">
         <div class="slide-content">
           <h3>N5 overseas</h3>
           <h2>Sattu</h2>
         </div>
       </div>
-      <div class="slide active">
+      <div class="slide">
         <img src="images/unnamed-3.png" alt="Masala Sattu">
         <div class="slide-content">
           <h3>N5 overseas</h3>
@@ -103,6 +125,7 @@
       <span class="dot" onclick="currentSlide(3)"></span>
     </div>
   </section>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Features -->
   <section class="features">
@@ -263,12 +286,9 @@
 
     
 
-
+  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js?v=1.4"></script>
-
-  
-
-  
-</body>
-</html>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="script.js?v=1.6"></script>
+  </body>
+  </html>
