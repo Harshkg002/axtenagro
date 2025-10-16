@@ -1,3 +1,5 @@
+console.log("script.js loaded on this page");
+
 // ✅ Supabase Init
 const { createClient } = supabase;
 
@@ -9,7 +11,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // 👤 Admin emails
 const ADMIN_EMAILS = ["akshsaini48@gmail.com", "niteshsaini014@gmail.com"];
 
-// DOM elements
+// DOM elements (may not exist on every page)
 const loginForm = document.getElementById("loginForm");
 const loginStatus = document.getElementById("loginStatus");
 const uploadForm = document.getElementById("uploadForm");
@@ -93,27 +95,38 @@ if (loginForm) {
       });
 
       if (error) {
-        loginStatus.style.display = "block";
-        loginStatus.textContent = "❌ Login failed: " + error.message;
+        if (loginStatus) {
+          loginStatus.style.display = "block";
+          loginStatus.textContent = "❌ Login failed: " + error.message;
+        }
         return;
       }
 
-      if (data?.user?.email && ADMIN_EMAILS.includes(data.user.email.trim().toLowerCase())) {
-        loginStatus.style.display = "block";
-        loginStatus.textContent = "✅ Logged in as Admin";
+      if (
+        data?.user?.email &&
+        ADMIN_EMAILS.includes(data.user.email.trim().toLowerCase())
+      ) {
+        if (loginStatus) {
+          loginStatus.style.display = "block";
+          loginStatus.textContent = "✅ Logged in as Admin";
+        }
         if (loginScreen && uploadSection) {
           loginScreen.style.display = "none";
           uploadSection.style.display = "block";
         }
-        loadProducts(); // Load products on successful login
+        loadProducts();
       } else {
-        loginStatus.style.display = "block";
-        loginStatus.textContent = "⚠️ You are not authorized as Admin.";
+        if (loginStatus) {
+          loginStatus.style.display = "block";
+          loginStatus.textContent = "⚠️ You are not authorized as Admin.";
+        }
       }
     } catch (err) {
       console.error(err);
-      loginStatus.style.display = "block";
-      loginStatus.textContent = "❌ Unexpected error: " + err.message;
+      if (loginStatus) {
+        loginStatus.style.display = "block";
+        loginStatus.textContent = "❌ Unexpected error: " + err.message;
+      }
     }
   });
 }
@@ -134,11 +147,15 @@ if (uploadForm) {
     }
 
     try {
-      const { data: userData, error: userErr } = await supabaseClient.auth.getUser();
+      const { data: userData, error: userErr } =
+        await supabaseClient.auth.getUser();
       if (userErr) throw userErr;
 
       const user = userData?.user;
-      if (!user || !ADMIN_EMAILS.includes(user.email.trim().toLowerCase())) {
+      if (
+        !user ||
+        !ADMIN_EMAILS.includes(user.email.trim().toLowerCase())
+      ) {
         throw new Error("Not authorized");
       }
 
@@ -153,21 +170,23 @@ if (uploadForm) {
         .from("photos")
         .getPublicUrl(fileName);
 
-      const { error: insertError } = await supabaseClient.from("uploads").insert([
-        {
-          firstname,
-          category,
-          description,
-          image_url: publicURL.publicUrl,
-          user_id: user.id,
-        }
-      ]);
+      const { error: insertError } = await supabaseClient
+        .from("uploads")
+        .insert([
+          {
+            firstname,
+            category,
+            description,
+            image_url: publicURL.publicUrl,
+            user_id: user.id,
+          },
+        ]);
 
       if (insertError) throw insertError;
 
       if (statusEl) statusEl.textContent = "✅ Upload successful!";
       uploadForm.reset();
-      loadProducts(); // Refresh product list
+      loadProducts();
     } catch (err) {
       console.error(err);
       if (statusEl) statusEl.textContent = "❌ Upload failed: " + err.message;
@@ -179,17 +198,23 @@ if (uploadForm) {
 function initMobileMenu() {
   const navOverlay = document.getElementById("navOverlay");
   const setExpanded = (btns, expanded) => {
-    btns.forEach((b) => b.setAttribute("aria-expanded", expanded ? "true" : "false"));
+    btns.forEach((b) =>
+      b.setAttribute("aria-expanded", expanded ? "true" : "false")
+    );
   };
   const closeAnyMenu = () => {
-    document.querySelectorAll(".nav-menu.open").forEach(m => m.classList.remove("open"));
+    document
+      .querySelectorAll(".nav-menu.open")
+      .forEach((m) => m.classList.remove("open"));
     if (navOverlay) navOverlay.classList.remove("open");
     setExpanded(document.querySelectorAll("#menuToggle, .hamburger"), false);
     document.body.classList.remove("drawer-open");
   };
   const openForButton = (btn) => {
     const navbar = btn.closest(".navbar");
-    const menu = navbar ? navbar.querySelector(".nav-menu") : document.querySelector(".nav-menu");
+    const menu = navbar
+      ? navbar.querySelector(".nav-menu")
+      : document.querySelector(".nav-menu");
     if (!menu) return;
     const isOpen = menu.classList.contains("open");
     closeAnyMenu();
@@ -200,6 +225,7 @@ function initMobileMenu() {
       document.body.classList.add("drawer-open");
     }
   };
+  console.log("menuToggle script loaded")
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("#menuToggle, .hamburger");
     if (btn) {
@@ -213,13 +239,27 @@ function initMobileMenu() {
     }
   });
   document.querySelectorAll("#menuToggle, .hamburger").forEach((btn) => {
-    btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openForButton(btn); });
-    btn.addEventListener("touchend", (e) => { e.preventDefault(); e.stopPropagation(); openForButton(btn); }, { passive: false });
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openForButton(btn);
+    });
+    btn.addEventListener(
+      "touchend",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openForButton(btn);
+      },
+      { passive: false }
+    );
   });
   if (navOverlay) {
     navOverlay.addEventListener("click", closeAnyMenu);
   }
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAnyMenu(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAnyMenu();
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -230,23 +270,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.querySelector(".close-btn");
   const enquiryForm = document.getElementById("enquiryForm");
 
-  if (chatBtn) {
+  if (chatBtn && modal) {
     chatBtn.addEventListener("click", () => {
       modal.style.display = "block";
     });
   }
 
-  if (closeBtn) {
+  if (closeBtn && modal) {
     closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
     });
   }
 
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
+  if (modal) {
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
 
   if (enquiryForm) {
     enquiryForm.addEventListener("submit", async (e) => {
@@ -263,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           alert("✅ Thank you! Your enquiry has been sent.");
           enquiryForm.reset();
-          modal.style.display = "none";
+          if (modal) modal.style.display = "none";
         } else {
           alert("❌ There was a problem sending your enquiry.");
         }
@@ -304,21 +346,25 @@ function attachProductEnquiryHandlers() {
 
 // Load preview products
 async function loadHomeProducts() {
+  const homeContainer = document.getElementById("home-products");
+  if (!homeContainer) return; // ✅ guard
+
   const { data, error } = await supabaseClient
     .from("uploads")
     .select("id, firstname, category, image_url")
     .limit(6)
     .order("id", { ascending: false });
 
-  const homeContainer = document.getElementById("home-products");
   if (data && data.length > 0) {
-    data.forEach(item => {
+    data.forEach((item) => {
       const div = document.createElement("div");
       div.className = "product-card";
       div.innerHTML = `
         <img src="${item.image_url}" alt="${item.firstname}">
         <h4>${item.firstname}</h4>
-        <p class="home-category"><em class="category">${item.category || ""}</em></p>
+        <p class="home-category"><em class="category">${
+          item.category || ""
+        }</em></p>
       `;
       div.addEventListener("click", () => {
         window.location.href = `product-details.html?id=${item.id}`;
@@ -333,51 +379,59 @@ loadHomeProducts();
 const searchInput = document.getElementById("search-input");
 const searchPopup = document.getElementById("search-popup");
 
-searchInput.addEventListener("input", async function () {
-  const query = this.value.trim().toLowerCase();
-  if (!query) {
-    searchPopup.style.display = "none";
-    return;
-  }
+if (searchInput && searchPopup) {
+  searchInput.addEventListener("input", async function () {
+    const query = this.value.trim().toLowerCase();
+    if (!query) {
+      searchPopup.style.display = "none";
+      return;
+    }
 
-  const { data, error } = await supabaseClient
-    .from("uploads")
-    .select("id, firstname, image_url")
-    .ilike("firstname", `%${query}%`)
-    .limit(5);
+    const { data, error } = await supabaseClient
+      .from("uploads")
+      .select("id, firstname, image_url")
+      .ilike("firstname", `%${query}%`)
+      .limit(5);
 
-  if (error || !data || data.length === 0) {
-    searchPopup.innerHTML = "<div>No results found</div>";
-    searchPopup.style.display = "block";
-    return;
-  }
+    if (error || !data || data.length === 0) {
+      searchPopup.innerHTML = "<div>No results found</div>";
+      searchPopup.style.display = "block";
+      return;
+    }
 
-  searchPopup.innerHTML = "";
-  data.forEach(item => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <img src="${item.image_url}" alt="${item.firstname}">
-      <span>${item.firstname}</span>
-    `;
-    div.addEventListener("click", () => {
-      showProductCard(item);
+    searchPopup.innerHTML = "";
+    data.forEach((item) => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <img src="${item.image_url}" alt="${item.firstname}">
+        <span>${item.firstname}</span>
+      `;
+      div.addEventListener("click", () => {
+        showProductCard(item);
+      });
+      searchPopup.appendChild(div);
     });
-    searchPopup.appendChild(div);
+    searchPopup.style.display = "block";
   });
-  searchPopup.style.display = "block";
-});
+
+  document.addEventListener("click", (e) => {
+    if (
+      !e.target.closest(".search-bar") &&
+      !e.target.closest("#search-popup")
+    ) {
+      searchPopup.style.display = "none";
+    }
+  });
+}
 
 function showProductCard(item) {
-  searchPopup.style.display = "none";
+  if (searchPopup) searchPopup.style.display = "none";
   window.location.href = `product-details.html?id=${item.id}`;
 }
 
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".search-bar") && !e.target.closest("#search-popup")) {
-    searchPopup.style.display = "none";
-  }
-});
-
+// =============================
+// Slider
+// =============================
 let slideIndex = 0;
 function showSlide(n) {
   const slides = document.querySelectorAll(".slide");
@@ -390,11 +444,15 @@ function showSlide(n) {
     s.classList.remove("active");
     s.style.display = i === slideIndex ? "block" : "none";
   });
-  dots.forEach(d => d.classList.remove("active"));
+  dots.forEach((d) => d.classList.remove("active"));
 
-  slides[slideIndex].style.display = "block";
-  slides[slideIndex].classList.add("active");
-  dots[slideIndex].classList.add("active");
+  if (slides[slideIndex]) {
+    slides[slideIndex].style.display = "block";
+    slides[slideIndex].classList.add("active");
+  }
+  if (dots[slideIndex]) {
+    dots[slideIndex].classList.add("active");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -403,10 +461,19 @@ document.addEventListener("DOMContentLoaded", () => {
   if (slides.length) {
     slides.forEach((s, i) => (s.style.display = i === 0 ? "block" : "none"));
     if (dots.length) {
-      dots.forEach((d, i) => d.onclick = () => { slideIndex = i; showSlide(slideIndex); });
+      dots.forEach(
+        (d, i) =>
+          (d.onclick = () => {
+            slideIndex = i;
+            showSlide(slideIndex);
+          })
+      );
     }
     showSlide(slideIndex);
-    setInterval(() => { slideIndex++; showSlide(slideIndex); }, 3000);
+    setInterval(() => {
+      slideIndex++;
+      showSlide(slideIndex);
+    }, 3000);
   }
 });
 

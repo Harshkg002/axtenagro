@@ -7,19 +7,24 @@
     <link rel="stylesheet" href="style.css">
 
     <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' https://www.gstatic.com https://www.googleapis.com 'unsafe-inline';
-        style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
-        img-src    'self' data: https:;
-        font-src   'self' https://fonts.gstatic.com;
-        connect-src 'self'
-                    https://firestore.googleapis.com
-                    https://www.googleapis.com
-                    https://identitytoolkit.googleapis.com
-                    https://securetoken.googleapis.com
-                    https://firebaseinstallations.googleapis.com;
-      ">
+  content="
+    default-src 'self';
+    script-src 'self' https://www.gstatic.com https://www.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+    style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+    img-src    'self' data: https:;
+    font-src   'self' https://fonts.gstatic.com;
+    connect-src 'self'
+                https://lvpyferhoytfcemdlvix.supabase.co
+                https://firestore.googleapis.com
+                https://www.googleapis.com
+                https://identitytoolkit.googleapis.com
+                https://securetoken.googleapis.com
+                https://firebaseinstallations.googleapis.com
+                https://formspree.io;
+    frame-ancestors 'self';
+    base-uri 'self';
+">
+
 
       <link rel="icon" type="image/png" href="images/favicon_white.png">
       <link rel="icon" type="image/x-icon" href="images/favicon_white.ico">
@@ -36,26 +41,28 @@
         </div>
         
         <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <img src="images/logo.png" alt="N5 overseas Logo">
-                    <div class="logo-text">
-                        <h2>N5 Overseas</h2>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="site-title">N5-Overseas</div>
-                <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
-            </div>
-            
-            <div class="nav-menu">
-                <a href="index.html">HOME</a>
-                <a href="products.html">OUR PRODUCTS</a>
-                <a href="certificate.html">CERTIFICATE</a>
-                <a href="about.html">ABOUT US</a>
-                <a href="contact.html" class="active">BULK ENQUIRY</a>
-            </div>
-        </nav>
+      <div class="nav-container">
+        <div class="logo">
+          <a href="index.html" class="active">
+          <img src="images/logo.png" alt="N5 Overseas Logo">
+          <div class="logo-text">
+            <h2>N5-Overseas</h2>
+          </a>
+          </div>
+        </div>
+  
+        <div class="site-title">N5-Overseas</div>
+        <button class="hamburger" id="menuToggle" aria-label="Open menu">☰</button>
+      </div>
+  
+      <div class="nav-menu">
+        <a href="index.html">HOME</a>
+        <a href="products.html">OUR PRODUCTS</a>
+        <a href="certificate.html">CERTIFICATE</a>
+        <a href="about.html" >ABOUT US</a>
+        <a href="contact.html"class="active">BULK ENQUIRY</a>
+      </div>
+    </nav>
     </header>
 
     <!-- Contact Section -->
@@ -180,6 +187,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js?v=1.6"></script>
 </body>
 </html>
